@@ -1,33 +1,71 @@
-// <scenario-map>: a dark-tinted OpenStreetMap view (via Leaflet, loaded
-// lazily from a CDN) that flies between the three thesis scenarios.
+// <scenario-map>: an interactive vector map (via MapLibre GL, loaded lazily
+// from a CDN) that flies between the three thesis scenarios. Uses free
+// vector tiles from OpenFreeMap (OpenMapTiles schema, no API key) so roads
+// and buildings can be colored individually to match the site's palette,
+// rather than tinting a raster image with a CSS filter.
 (() => {
-  const CSS = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-  const CSS_HASH = 'sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H';
-  const JS = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-  const JS_HASH = 'sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH';
+  const CSS = 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css';
+  const CSS_HASH = 'sha384-MinO0mNliZ3vwppuPOUnGa+iq619pfMhLVUXfC4LHwSCvF9H+6P/KO4Q7qBOYV5V';
+  const JS = 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js';
+  const JS_HASH = 'sha384-SYKAG6cglRMN0RVvhNeBY0r3FYKNOJtznwA0v7B5Vp9tr31xAHsZC0DqkQ/pZDmj';
+  const STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
 
   const VIEWS = {
-    Melaten:   { center: [50.7842, 6.0500], zoom: 15 },
-    Aachen:    { center: [50.7787, 6.0789], zoom: 15.5 },
-    Jackerath: { center: [51.0305, 6.4740], zoom: 14 }
+    Melaten:   { center: [6.0500, 50.7842], zoom: 15 },
+    Aachen:    { center: [6.0789, 50.7787], zoom: 15.5 },
+    Jackerath: { center: [6.4740, 51.0305], zoom: 14 }
   };
 
-  let cssPromise, jsPromise;
+  // site palette: dark navy background, neon-green roads, pink buildings
+  const BG = '#0f1118';
+  const WATER = '#141b2c';
+  const PARK = '#131a16';
+  const ROAD = '#39ff8f';
+  const ROAD_CASING = '#0a3a22';
+  const BUILDING = '#ff8fd1';
+
+  function colorStyle(style) {
+    const s = JSON.parse(JSON.stringify(style));
+    for (const l of s.layers) {
+      if (l.type === 'symbol') { l.layout = l.layout || {}; l.layout.visibility = 'none'; continue; }
+      if (l.id === 'background') l.paint['background-color'] = BG;
+      else if (l.id === 'water') l.paint['fill-color'] = WATER;
+      else if (/^park|landcover|landuse/.test(l.id) && l.paint && l.paint['fill-color']) l.paint['fill-color'] = PARK;
+      else if (l.id === 'building') {
+        l.paint['fill-color'] = BUILDING;
+        l.paint['fill-opacity'] = 0.55;
+        delete l.paint['fill-outline-color'];
+        l.maxzoom = 24; // this layer is designed to hand off to building-3d above z14 — keep it flat instead
+      } else if (l.id === 'building-3d') {
+        l.layout = l.layout || {}; l.layout.visibility = 'none';
+      } else if (/^road_(motorway|trunk_primary|secondary_tertiary|minor|link|motorway_link|service_track|path_pedestrian)$/.test(l.id) && l.paint && l.paint['line-color']) {
+        l.paint['line-color'] = ROAD;
+      } else if (/casing/.test(l.id) && l.paint && l.paint['line-color']) {
+        l.paint['line-color'] = ROAD_CASING;
+      } else if (/label|place|poi|boundary|admin/i.test(l.id)) {
+        l.layout = l.layout || {}; l.layout.visibility = 'none';
+      }
+    }
+    return s;
+  }
+
+  let cssPromise, jsPromise, stylePromise;
   const loadCss = () => cssPromise || (cssPromise = new Promise((res) => {
-    if (document.querySelector('link[data-leaflet]')) return res();
+    if (document.querySelector('link[data-maplibre]')) return res();
     const l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = CSS; l.integrity = CSS_HASH; l.crossOrigin = 'anonymous';
-    l.setAttribute('data-leaflet', '');
+    l.setAttribute('data-maplibre', '');
     l.onload = res; l.onerror = res;
     document.head.appendChild(l);
   }));
   const loadJs = () => jsPromise || (jsPromise = new Promise((res, rej) => {
-    if (window.L) return res(window.L);
+    if (window.maplibregl) return res(window.maplibregl);
     const s = document.createElement('script');
     s.src = JS; s.integrity = JS_HASH; s.crossOrigin = 'anonymous';
-    s.onload = () => res(window.L); s.onerror = rej;
+    s.onload = () => res(window.maplibregl); s.onerror = rej;
     document.head.appendChild(s);
   }));
+  const loadStyle = () => stylePromise || (stylePromise = fetch(STYLE_URL).then(r => r.json()).then(colorStyle));
 
   class ScenarioMap extends HTMLElement {
     static get observedAttributes() { return ['scenario']; }
@@ -38,22 +76,12 @@
       this._lang = this._lang || 'de';
       this.style.display = 'block';
       if (getComputedStyle(this).position === 'static') this.style.position = 'relative';
-      this.style.background = '#0f1118';
+      this.style.background = BG;
       this.style.overflow = 'hidden';
 
       this._host = document.createElement('div');
-      Object.assign(this._host.style, {
-        position: 'absolute', inset: '0',
-        filter: 'invert(1) hue-rotate(200deg) brightness(1) contrast(1.7) saturate(1.1)'
-      });
+      Object.assign(this._host.style, { position: 'absolute', inset: '0' });
       this.appendChild(this._host);
-
-      this._tint = document.createElement('div');
-      Object.assign(this._tint.style, {
-        position: 'absolute', inset: '0', pointerEvents: 'none',
-        background: '#7c6cf0', mixBlendMode: 'color', opacity: '0.4'
-      });
-      this.appendChild(this._tint);
 
       this._vig = document.createElement('div');
       Object.assign(this._vig.style, {
@@ -72,20 +100,34 @@
       this.appendChild(this._status);
 
       loadCss();
-      loadJs().then((L) => {
+      Promise.all([loadJs(), loadStyle()]).then(([maplibregl, style]) => {
         const v = VIEWS[this.getAttribute('scenario')] || VIEWS.Melaten;
-        this._map = L.map(this._host, {
-          zoomControl: false, attributionControl: true, keyboard: false,
-          scrollWheelZoom: false, center: v.center, zoom: v.zoom
+        this._map = new maplibregl.Map({
+          container: this._host,
+          style,
+          center: v.center,
+          zoom: v.zoom,
+          attributionControl: false,
+          scrollZoom: false,
+          dragRotate: false,
+          pitchWithRotate: false,
+          touchPitch: false
         });
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors', maxZoom: 19
-        }).addTo(this._map);
-        L.control.zoom({ position: 'bottomright' }).addTo(this._map);
-        this._map.on('click', () => this._map.scrollWheelZoom.enable());
-        this._map.on('mouseout', () => this._map.scrollWheelZoom.disable());
-        this._status.remove();
-        this._ro = new ResizeObserver(() => this._map.invalidateSize());
+        this._map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
+
+        // small, always-collapsed credit line — the built-in attribution
+        // control auto-expands on load and covers most of a small card
+        const credit = document.createElement('div');
+        Object.assign(credit.style, {
+          position: 'absolute', left: '8px', bottom: '4px', font: '9px/1.3 Sora, system-ui, sans-serif',
+          color: 'rgba(255,255,255,0.35)', pointerEvents: 'none', zIndex: 1
+        });
+        credit.innerHTML = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener" style="color:inherit; pointer-events:auto;">OpenStreetMap</a> contributors';
+        this._host.appendChild(credit);
+        this._map.on('click', () => this._map.scrollZoom.enable());
+        this._map.on('mouseout', () => this._map.scrollZoom.disable());
+        this._map.on('load', () => { this._status.remove(); });
+        this._ro = new ResizeObserver(() => this._map.resize());
         this._ro.observe(this);
       }).catch(() => {
         this._unavailable = true;
@@ -96,7 +138,7 @@
     attributeChangedCallback(n, o, v) {
       if (n !== 'scenario' || !this._map || o === v) return;
       const view = VIEWS[v];
-      if (view) this._map.flyTo(view.center, view.zoom, { duration: 0.9 });
+      if (view) this._map.flyTo({ center: view.center, zoom: view.zoom, duration: 900 });
     }
 
     disconnectedCallback() { if (this._ro) this._ro.disconnect(); }
