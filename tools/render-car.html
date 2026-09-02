@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>AMG GT3 — Render</title>
+<style>
+  html, body { margin:0; background:transparent; }
+  #stage { width:1760px; height:880px; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script type="module">
+import * as THREE from 'https://esm.sh/three@0.184.0';
+import { GLTFLoader } from 'https://esm.sh/three@0.184.0/examples/jsm/loaders/GLTFLoader.js';
+
+const W = 1760, H = 880;
+const ACCENT = '#9184d9', SHELL = '#161826', CAN = '#39ff8f', ETH = '#e4e7f5';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H, false);
+document.getElementById('stage').appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, W / H, 0.1, 200);
+
+const LENGTH = 4.6;
+const gltf = await new GLTFLoader().loadAsync('./assets/amg-gt3.glb');
+const model = gltf.scene;
+
+let b = new THREE.Box3().setFromObject(model);
+const size = b.getSize(new THREE.Vector3());
+const ax = [
+  { v: size.x, u: new THREE.Vector3(1, 0, 0) },
+  { v: size.y, u: new THREE.Vector3(0, 1, 0) },
+  { v: size.z, u: new THREE.Vector3(0, 0, 1) }
+].sort((a, c) => c.v - a.v);
+const xA = ax[0].u.clone(), yA = ax[2].u.clone();
+const zA = new THREE.Vector3().crossVectors(xA, yA);
+if (new THREE.Matrix4().makeBasis(xA, yA, zA).determinant() < 0) zA.negate();
+model.applyMatrix4(new THREE.Matrix4().makeBasis(xA, yA, zA).invert());
+model.updateMatrixWorld(true);
+b = new THREE.Box3().setFromObject(model);
+model.scale.multiplyScalar(LENGTH / b.getSize(new THREE.Vector3()).x);
+model.updateMatrixWorld(true);
+b = new THREE.Box3().setFromObject(model);
+const c0 = b.getCenter(new THREE.Vector3());
+model.position.sub(new THREE.Vector3(c0.x, b.min.y, c0.z));
+model.updateMatrixWorld(true);
+const box = new THREE.Box3().setFromObject(model);
+
+const edgeMat = new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.62, depthWrite: false });
+const shellMat = new THREE.MeshBasicMaterial({ color: SHELL, transparent: true, opacity: 0.72 });
+const body = new THREE.Group();
+model.traverse(o => {
+  if (!o.isMesh || !o.geometry) return;
+  const g = o.geometry;
+  const sh = new THREE.Mesh(g, shellMat); sh.applyMatrix4(o.matrixWorld); body.add(sh);
+  const e = new THREE.LineSegments(new THREE.EdgesGeometry(g, 24), edgeMat); e.applyMatrix4(o.matrixWorld); body.add(e);
+});
+scene.add(body);
+
+// angedeutete Steuergeräte
+const sz = box.getSize(new THREE.Vector3()), ctr = box.getCenter(new THREE.Vector3());
+const P = (fx, fy, fz) => new THREE.Vector3(ctr.x + fx * sz.x, box.min.y + fy * sz.y, ctr.z + fz * sz.z);
+const NODES = [
+  [-0.06, 0.36, 0.0, CAN, 0.105],
+  [0.33, 0.34, -0.18, CAN, 0.075],
+  [-0.3, 0.24, 0.2, ACCENT, 0.075],
+  [0.2, 0.66, 0.28, ETH, 0.075],
+  [-0.38, 0.42, -0.16, CAN, 0.075],
+  [0.45, 0.3, 0.02, ACCENT, 0.075]
+];
+const net = new THREE.Group(); net.renderOrder = 3; scene.add(net);
+const hub = P(...NODES[0].slice(0, 3));
+NODES.forEach((n, i) => {
+  const p = P(n[0], n[1], n[2]);
+  const ring = new THREE.LineSegments(
+    new THREE.EdgesGeometry(new THREE.OctahedronGeometry(n[4], 0)),
+    new THREE.LineBasicMaterial({ color: n[3], transparent: true, opacity: 0.95, depthTest: false, depthWrite: false })
+  );
+  ring.position.copy(p); ring.renderOrder = 4; net.add(ring);
+  const core = new THREE.Mesh(
+    new THREE.SphereGeometry(n[4] * 0.42, 14, 10),
+    new THREE.MeshBasicMaterial({ color: n[3], transparent: true, opacity: 0.95, depthTest: false, depthWrite: false })
+  );
+  core.position.copy(p); core.renderOrder = 5; net.add(core);
+  if (i === 0) return;
+  const via = new THREE.Vector3().lerpVectors(hub, p, 0.5).add(new THREE.Vector3(0, sz.y * 0.04, 0));
+  const curve = new THREE.CatmullRomCurve3([hub.clone(), via, p.clone()], false, 'catmullrom', 0.4);
+  net.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(curve.getPoints(56)),
+    new THREE.LineBasicMaterial({ color: n[3], transparent: true, opacity: 0.5, depthTest: false, depthWrite: false })
+  ));
+});
+
+// dreiviertel-Ansicht von vorn links, leicht von oben
+camera.position.set(4.55, 2.05, 5.05);
+camera.lookAt(0, 0.62, 0);
+renderer.render(scene, camera);
+// als <img> ersetzen, damit die Aufnahme verlässlich Pixel bekommt
+const out = new Image();
+out.src = renderer.domElement.toDataURL('image/png');
+out.width = W; out.height = H;
+out.style.display = 'block';
+await out.decode();
+renderer.domElement.replaceWith(out);
+document.title = 'ready';
+</script>
+</body>
+</html>

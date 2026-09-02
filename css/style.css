@@ -1,0 +1,319 @@
+/* Page-specific styles: layout, animations and interactive states for the
+   portfolio. Design tokens (colors, spacing, type) live in tokens.css. */
+
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap");
+
+@keyframes glow-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -20px); }
+}
+
+@keyframes intro-line {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bus-flow {
+  to { stroke-dashoffset: -40; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes page-in {
+    from { opacity: 1; transform: none; }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+/* -- intro splash screen --
+   Shown on load, hidden a moment later by app.js switching data-state. */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.intro-overlay[data-state="exit"],
+.intro-overlay[data-state="done"] {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+.intro-overlay[data-state="done"] {
+  visibility: hidden;
+}
+.intro-glow {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-accent-800) 0%, transparent 70%);
+  top: -120px;
+  left: -100px;
+  animation: glow-drift 9s ease-in-out infinite;
+}
+.intro-glow--secondary {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, var(--color-accent-900) 0%, transparent 70%);
+  top: auto;
+  left: auto;
+  bottom: -140px;
+  right: -80px;
+  animation-duration: 11s;
+  animation-direction: reverse;
+}
+.intro-rule {
+  height: 2px;
+  margin: var(--space-4) auto 0;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  animation: intro-line 1.1s ease-out 0.3s both;
+}
+
+/* -- navigation -- */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 7px calc(var(--space-4) * 1.1);
+  border: 1px solid var(--color-neutral-800);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  background: color-mix(in oklab, var(--color-bg) 82%, transparent);
+  box-shadow: var(--shadow-md);
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+.nav:hover {
+  border-color: var(--color-neutral-700);
+  background: color-mix(in oklab, var(--color-bg) 94%, transparent);
+  box-shadow: var(--shadow-lg);
+}
+.nav-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  text-decoration: none;
+  background: color-mix(in oklab, var(--color-neutral-900) 88%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, #39ff8f 80%, transparent),
+    0 0 10px 1px color-mix(in oklab, #39ff8f 35%, transparent);
+  transition: box-shadow 0.2s ease;
+}
+.nav-avatar:hover {
+  box-shadow: 0 0 0 2px #39ff8f;
+}
+.nav-avatar span {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: #39ff8f;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.nav-link {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--color-neutral-300);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.nav-link:hover {
+  text-decoration: none;
+  color: var(--color-text);
+  background: color-mix(in oklab, var(--color-neutral-700) 32%, transparent);
+}
+.nav-link[data-active="true"] {
+  color: var(--color-text);
+  font-weight: 600;
+  background: color-mix(in oklab, var(--color-neutral-700) 55%, transparent);
+}
+.nav-lang-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-neutral-800);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.nav-lang {
+  padding: 6px 12px;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  color: var(--color-neutral-300);
+  background: transparent;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.nav-lang:hover {
+  text-decoration: none;
+}
+.nav-lang[data-active="true"] {
+  color: var(--color-bg);
+  background: var(--color-text);
+}
+.nav-gh {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--color-neutral-700);
+  color: var(--color-text);
+  font-size: 0.82rem;
+  transition: border-color 0.18s ease;
+}
+.nav-gh:hover {
+  border-color: #39ff8f;
+  text-decoration: none;
+}
+
+/* -- page views --
+   Only one <section class="view"> is visible at a time; app.js toggles
+   data-active on the section matching the current route. */
+.view {
+  display: none;
+}
+.view[data-active="true"] {
+  display: block;
+  animation: page-in 0.5s cubic-bezier(0.22, 0.7, 0.3, 1) both;
+}
+/* home needs its content vertically centered; kept as a separate rule
+   (rather than inline on the section) so it doesn't outrank .view's
+   display:none — an inline style would win over that regardless of
+   data-active, and the section would never hide. */
+.view-home[data-active="true"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* -- home -- */
+.home-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.92rem;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+.home-cta:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+.home-cta-primary {
+  background: #39ff8f;
+  color: #0d1014;
+  font-weight: 600;
+}
+.home-cta-primary:hover {
+  background: #5cffa4;
+  color: #0d1014;
+}
+.home-cta-ghost {
+  border: 1px solid var(--color-neutral-700);
+  color: var(--color-text);
+}
+.home-cta-ghost:hover {
+  border-color: #39ff8f;
+  color: var(--color-text);
+}
+
+/* -- werdegang: experience timeline -- */
+.tl-row {
+  display: grid;
+  grid-template-columns: 118px 26px minmax(0, 1fr);
+  align-items: start;
+  transition: background 0.25s ease;
+}
+.tl-row:hover {
+  background: color-mix(in oklab, var(--color-neutral-800) 16%, transparent);
+}
+
+/* -- projekte: project cards -- */
+.proj-card {
+  border: 1px solid var(--color-neutral-800);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: color-mix(in oklab, var(--color-neutral-800) 26%, transparent);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.proj-card:hover {
+  transform: translateY(-4px);
+}
+.thesis-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr);
+}
+.thesis-media figcaption {
+  min-height: 76px;
+  box-sizing: border-box;
+}
+@media (max-width: 760px) {
+  .thesis-media {
+    grid-template-columns: 1fr;
+  }
+  .thesis-media > figure + figure {
+    border-left: 0;
+    border-top: 1px solid var(--color-neutral-800);
+  }
+}
+
+/* scenario chips (Melaten / Aachen / Jackerath) — the same data-active
+   attribute pattern used for nav-link and nav-lang above */
+.scen-chip {
+  padding: 5px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-neutral-800);
+  background: transparent;
+  color: var(--color-neutral-400);
+  transition: color 0.18s, border-color 0.18s, background 0.18s;
+}
+.scen-chip:hover {
+  color: var(--color-text);
+  border-color: var(--color-neutral-700);
+}
+.scen-chip[data-active="true"] {
+  background: #39ff8f;
+  border-color: #39ff8f;
+  color: #0d1014;
+  font-weight: 600;
+}
+.scen-cap {
+  display: none;
+}
+.scen-cap[data-active="true"] {
+  display: block;
+}
+
+/* the animated bus lines in the car-net 3D view */
+.amg-bus path[stroke-dasharray] {
+  animation: bus-flow 2.6s linear infinite;
+}
