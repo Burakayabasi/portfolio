@@ -135,6 +135,18 @@
           @keyframes spin { to { transform:rotate(360deg); } }
           .miss strong { color:var(--color-neutral-400, #b2b6ca); font-weight:500; font-size:13px; letter-spacing:0.02em; }
           .miss code { color:var(--color-accent, #9184d9); font-size:11.5px; }
+
+          /* On a short mobile-width box the warning badge, the drag/zoom
+             hint and the layer chips can all be on screen at once and
+             start to overlap. Shrink them and move the hint down so it
+             sits between the badge and the chips instead of behind them. */
+          @media (max-width: 480px) {
+            .note { top:9px; right:9px; padding:6px 10px 7px; max-width:calc(100% - 18px); }
+            .note i, .note s { font-size:8.5px; }
+            .hint { top:62%; padding:9px 14px; font-size:9px; }
+            .chips { padding:10px 12px; gap:6px; }
+            button { padding:4px 9px 4px 7px; font-size:9.5px; }
+          }
         </style>
         <div class="wrap">
           <div class="labels"></div>

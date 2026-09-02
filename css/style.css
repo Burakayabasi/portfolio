@@ -34,6 +34,7 @@
 .intro-overlay {
   position: fixed;
   inset: 0;
+  overflow: hidden;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -126,12 +127,28 @@
   line-height: 1;
   color: #39ff8f;
 }
+/* One row on every screen size: the links strip is the flexible part
+   (flex:1, min-width:0) and scrolls sideways instead of wrapping once
+   it runs out of room, so the nav pill itself never grows past a
+   single line. The mask fades the edges so a clipped label reads as
+   "more to scroll" rather than a hard cut. */
 .nav-links {
   display: flex;
   align-items: center;
   gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10px, #000 calc(100% - 10px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10px, #000 calc(100% - 10px), transparent);
+}
+.nav-links::-webkit-scrollbar {
+  display: none;
 }
 .nav-link {
+  flex-shrink: 0;
+  white-space: nowrap;
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 0.8rem;
@@ -150,14 +167,15 @@
   background: color-mix(in oklab, var(--color-neutral-700) 55%, transparent);
 }
 .nav-actions {
-  margin-left: auto;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 .nav-lang-group {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   border: 1px solid var(--color-neutral-800);
   border-radius: 999px;
   overflow: hidden;
@@ -177,19 +195,23 @@
   color: var(--color-bg);
   background: var(--color-text);
 }
+/* icon-only, same circular treatment as the BK avatar, so it reads as
+   one design language and costs far less width than a labelled button */
 .nav-gh {
-  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 14px;
-  border-radius: 999px;
+  justify-content: center;
+  box-sizing: border-box;
   border: 1px solid var(--color-neutral-700);
-  color: var(--color-text);
-  font-size: 0.82rem;
-  transition: border-color 0.18s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 .nav-gh:hover {
   border-color: #39ff8f;
+  box-shadow: 0 0 10px 1px color-mix(in oklab, #39ff8f 35%, transparent);
   text-decoration: none;
 }
 
@@ -325,32 +347,20 @@
 }
 
 /* -- small screens --
-   The nav pill is the one piece of the layout that doesn't reflow on its
-   own (it's a row of fixed-ish items), so below ~640px it wraps onto a
-   second line instead of forcing the page wider than the viewport. The
-   werdegang timeline's date/dot columns also shrink here to leave more
-   room for the actual content column. */
-@media (max-width: 640px) {
+   The nav pill itself stays a single row at every width (see .nav-links
+   above) — nothing to override here. The werdegang timeline's date/dot
+   columns shrink to leave more room for the actual content column, and
+   the car-net 3D view gets a taller box so its overlay text doesn't
+   collide. */
+@media (max-width: 480px) {
   .nav {
-    flex-wrap: wrap;
-    row-gap: 10px;
-    padding: 8px 14px;
-    gap: var(--space-3);
-  }
-  .nav-links {
-    order: 3;
-    flex-basis: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px;
+    padding: 7px 10px;
+    gap: var(--space-2);
   }
   .nav-link {
     padding: 5px 10px;
     font-size: 0.76rem;
   }
-}
-
-@media (max-width: 480px) {
   :root {
     --tl-date-w: 78px;
     --tl-dot-w: 20px;
@@ -360,5 +370,12 @@
      dropping them is what keeps that header row from overflowing */
   .tl-section-count {
     display: none;
+  }
+  /* the car-net 3D view packs a warning badge, a drag/zoom hint and a
+     row of layer toggles into one box — at a 16:9 ratio there isn't
+     enough height on a phone for all three at once, so give it more
+     room to breathe */
+  .car-media {
+    aspect-ratio: 4 / 3;
   }
 }
