@@ -11,9 +11,9 @@
   const STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
 
   const VIEWS = {
-    Melaten:   { center: [6.0500, 50.7842], zoom: 15 },
+    Melaten:   { center: [6.0500, 50.7842], zoom: 13.2 },
     Aachen:    { center: [6.0789, 50.7787], zoom: 15.5 },
-    Jackerath: { center: [6.4740, 51.0305], zoom: 14 }
+    Jackerath: { center: [6.4740, 51.0355], zoom: 14 }
   };
 
   // site palette: dark navy background, neon-green roads, pink buildings
