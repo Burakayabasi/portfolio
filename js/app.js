@@ -19,6 +19,37 @@
   const scenarioElements = document.querySelectorAll("scenario-map, prr-surface");
   const footer = document.querySelector(".site-footer");
 
+  // -- translation --
+  // Static content is translated declaratively: any element carrying
+  // data-en (plain text), data-en-html (nested markup), data-en-alt or
+  // data-en-aria-label is swapped between its original German content
+  // (captured once, on first run) and that English value. Custom
+  // elements with their own JS-generated German strings (car-net,
+  // scenario-map, github-contrib, prr-surface) expose a setLang(lang)
+  // method instead, called below.
+  const textNodes = document.querySelectorAll("[data-en]");
+  const htmlNodes = document.querySelectorAll("[data-en-html]");
+  const altNodes = document.querySelectorAll("[data-en-alt]");
+  const ariaNodes = document.querySelectorAll("[data-en-aria-label]");
+  const translatableElements = document.querySelectorAll(
+    "car-net, scenario-map, github-contrib, prr-surface"
+  );
+
+  textNodes.forEach((el) => {
+    if (el.dataset.de === undefined) el.dataset.de = el.textContent;
+  });
+  htmlNodes.forEach((el) => {
+    if (el.dataset.deHtml === undefined) el.dataset.deHtml = el.innerHTML;
+  });
+  altNodes.forEach((el) => {
+    if (el.dataset.deAlt === undefined) el.dataset.deAlt = el.alt;
+  });
+  ariaNodes.forEach((el) => {
+    if (el.dataset.deAriaLabel === undefined) {
+      el.dataset.deAriaLabel = el.getAttribute("aria-label") || "";
+    }
+  });
+
   function setView(view) {
     state.view = view;
 
@@ -37,8 +68,26 @@
 
   function setLang(lang) {
     state.lang = lang;
+    document.documentElement.setAttribute("lang", lang);
     langButtons.forEach((btn) => {
       btn.setAttribute("data-active", String(btn.dataset.langBtn === lang));
+    });
+
+    const en = lang === "en";
+    textNodes.forEach((el) => {
+      el.textContent = en ? el.dataset.en : el.dataset.de;
+    });
+    htmlNodes.forEach((el) => {
+      el.innerHTML = en ? el.dataset.enHtml : el.dataset.deHtml;
+    });
+    altNodes.forEach((el) => {
+      el.alt = en ? el.dataset.enAlt : el.dataset.deAlt;
+    });
+    ariaNodes.forEach((el) => {
+      el.setAttribute("aria-label", en ? el.dataset.enAriaLabel : el.dataset.deAriaLabel);
+    });
+    translatableElements.forEach((el) => {
+      if (typeof el.setLang === "function") el.setLang(lang);
     });
   }
 

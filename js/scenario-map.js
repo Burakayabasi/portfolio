@@ -35,6 +35,7 @@
     connectedCallback() {
       if (this._built) return;
       this._built = true;
+      this._lang = this._lang || 'de';
       this.style.display = 'block';
       if (getComputedStyle(this).position === 'static') this.style.position = 'relative';
       this.style.background = '#0f1118';
@@ -43,7 +44,7 @@
       this._host = document.createElement('div');
       Object.assign(this._host.style, {
         position: 'absolute', inset: '0',
-        filter: 'invert(1) hue-rotate(200deg) brightness(0.88) contrast(1.22) saturate(0.55)'
+        filter: 'invert(1) hue-rotate(200deg) brightness(1) contrast(1.7) saturate(1.1)'
       });
       this.appendChild(this._host);
 
@@ -67,7 +68,7 @@
         justifyContent: 'center', font: '500 11px/1 Sora, system-ui, sans-serif',
         letterSpacing: '0.16em', textTransform: 'uppercase', color: '#6d7183', pointerEvents: 'none'
       });
-      this._status.textContent = 'Karte wird geladen';
+      this._status.textContent = this._lang === 'en' ? 'Loading map' : 'Karte wird geladen';
       this.appendChild(this._status);
 
       loadCss();
@@ -86,7 +87,10 @@
         this._status.remove();
         this._ro = new ResizeObserver(() => this._map.invalidateSize());
         this._ro.observe(this);
-      }).catch(() => { this._status.textContent = 'Karte nicht verfügbar'; });
+      }).catch(() => {
+        this._unavailable = true;
+        this._status.textContent = this._lang === 'en' ? 'Map unavailable' : 'Karte nicht verfügbar';
+      });
     }
 
     attributeChangedCallback(n, o, v) {
@@ -96,6 +100,15 @@
     }
 
     disconnectedCallback() { if (this._ro) this._ro.disconnect(); }
+
+    setLang(lang) {
+      this._lang = lang;
+      if (!this._status || !this._status.isConnected) return;
+      const en = lang === 'en';
+      this._status.textContent = this._unavailable
+        ? (en ? 'Map unavailable' : 'Karte nicht verfügbar')
+        : (en ? 'Loading map' : 'Karte wird geladen');
+    }
   }
 
   if (!customElements.get('scenario-map')) customElements.define('scenario-map', ScenarioMap);

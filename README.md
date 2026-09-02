@@ -35,11 +35,3 @@ python3 -m http.server 8000
 ```
 
 Then open `http://localhost:8000`.
-
-## Notes
-
-- The DE/EN toggle in the nav currently switches its own active state
-  only; the page content itself is German throughout.
-- The PRR values in `js/prr-surface.js` are averaged over 5 simulation
-  seeds per scenario, produced for the thesis referenced on the
-  "Projekte" page.

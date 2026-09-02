@@ -41,25 +41,39 @@
   // fictional layout, fractions of the vehicle bounding box
   // fx: -0.5 rear .. +0.5 front · fy: 0 floor .. 1 roof · fz: lateral
   const ECUS = [
-    { id: 'gw', label: 'GW', name: 'Gateway', bus: 'can', fx: -0.06, fy: 0.36, fz: 0.0, hub: true },
-    { id: 'pt', label: 'PT', name: 'Antrieb', bus: 'can', fx: 0.33, fy: 0.34, fz: -0.18, via: [0.18, 0.3, -0.1] },
-    { id: 'ch', label: 'CH', name: 'Fahrwerk', bus: 'flexray', fx: -0.3, fy: 0.24, fz: 0.2, via: [-0.12, 0.26, 0.14] },
-    { id: 'iv', label: 'IV', name: 'Infotainment', bus: 'eth', fx: 0.2, fy: 0.66, fz: 0.28, via: [0.06, 0.5, 0.18] },
-    { id: 'bd', label: 'BD', name: 'Karosserie', bus: 'can', fx: -0.38, fy: 0.42, fz: -0.16, via: [-0.2, 0.44, -0.1] },
-    { id: 'fs', label: 'FS', name: 'Frontsensorik', bus: 'flexray', fx: 0.45, fy: 0.3, fz: 0.02, via: [0.4, 0.3, -0.1] }
+    { id: 'gw', label: 'GW', name: 'Gateway', nameEn: 'Gateway', bus: 'can', fx: -0.06, fy: 0.36, fz: 0.0, hub: true },
+    { id: 'pt', label: 'PT', name: 'Antrieb', nameEn: 'Powertrain', bus: 'can', fx: 0.33, fy: 0.34, fz: -0.18, via: [0.18, 0.3, -0.1] },
+    { id: 'ch', label: 'CH', name: 'Fahrwerk', nameEn: 'Chassis', bus: 'flexray', fx: -0.3, fy: 0.24, fz: 0.2, via: [-0.12, 0.26, 0.14] },
+    { id: 'iv', label: 'IV', name: 'Infotainment', nameEn: 'Infotainment', bus: 'eth', fx: 0.2, fy: 0.66, fz: 0.28, via: [0.06, 0.5, 0.18] },
+    { id: 'bd', label: 'BD', name: 'Karosserie', nameEn: 'Body', bus: 'can', fx: -0.38, fy: 0.42, fz: -0.16, via: [-0.2, 0.44, -0.1] },
+    { id: 'fs', label: 'FS', name: 'Frontsensorik', nameEn: 'Front Sensors', bus: 'flexray', fx: 0.45, fy: 0.3, fz: 0.02, via: [0.4, 0.3, -0.1] }
   ];
 
   const LAYERS = [
-    { id: 'body', label: 'Karosserie', color: PALETTE.body },
-    { id: 'can', label: 'CAN / CAN FD', color: PALETTE.can },
-    { id: 'flexray', label: 'FlexRay', color: PALETTE.flexray },
-    { id: 'eth', label: 'Automotive Ethernet', color: PALETTE.eth }
+    { id: 'body', label: 'Karosserie', labelEn: 'Body', color: PALETTE.body },
+    { id: 'can', label: 'CAN / CAN FD', labelEn: 'CAN / CAN FD', color: PALETTE.can },
+    { id: 'flexray', label: 'FlexRay', labelEn: 'FlexRay', color: PALETTE.flexray },
+    { id: 'eth', label: 'Automotive Ethernet', labelEn: 'Automotive Ethernet', color: PALETTE.eth }
   ];
+
+  const STRINGS = {
+    hintDrag: { de: 'Ziehen zum <em>Drehen</em>', en: 'Drag to <em>rotate</em>' },
+    hintScroll: { de: 'Scrollen zum <em>Zoomen</em>', en: 'Scroll to <em>zoom</em>' },
+    noteTitle: { de: 'Beispielhafte Darstellung', en: 'Example illustration' },
+    noteSub: { de: 'Keine reale Vernetzung oder Steuergeräte', en: 'Not an actual network or real ECUs' },
+    loading: { de: 'Modell wird geladen', en: 'Loading model' },
+    missTitle: { de: 'Fahrzeugmodell fehlt noch', en: 'Vehicle model not added yet' },
+    missBody: {
+      de: 'Die GLB-Datei liegt noch nicht im Projekt (Upload-Limit 30&nbsp;MB).<br>Komprimiert unter <code>assets/amg-gt3.glb</code> ablegen &mdash; dann erscheint der Umriss hier.',
+      en: 'The GLB file isn&rsquo;t in the project yet (30&nbsp;MB upload limit).<br>Drop a compressed version at <code>assets/amg-gt3.glb</code> &mdash; the outline will then appear here.'
+    }
+  };
 
   class CarNet extends HTMLElement {
     connectedCallback() {
       if (this._up) return;
       this._up = true;
+      this._lang = this._lang || 'de';
       this.style.display = 'block';
       this.style.position = this.style.position || 'relative';
       this.attachShadow({ mode: 'open' });
@@ -150,9 +164,9 @@
         </style>
         <div class="wrap">
           <div class="labels"></div>
-          <div class="hint"><span>Ziehen zum <em>Drehen</em></span><span>Scrollen zum <em>Zoomen</em></span></div>
-          <div class="note"><span class="row"><b>!</b><i>Beispielhafte Darstellung</i></span><s>Keine reale Vernetzung oder Steuergeräte</s></div>
-          <div class="load"><span class="sp"></span>Modell wird geladen</div>
+          <div class="hint"><span data-s="hintDrag">Ziehen zum <em>Drehen</em></span><span data-s="hintScroll">Scrollen zum <em>Zoomen</em></span></div>
+          <div class="note"><span class="row"><b>!</b><i data-s="noteTitle">Beispielhafte Darstellung</i></span><s data-s="noteSub">Keine reale Vernetzung oder Steuergeräte</s></div>
+          <div class="load"><span class="sp"></span><span data-s="loading">Modell wird geladen</span></div>
           <div class="chips"></div>
         </div>`;
       this._boot();
@@ -161,6 +175,27 @@
     disconnectedCallback() {
       cancelAnimationFrame(this._raf);
       this._ro && this._ro.disconnect();
+    }
+
+    setLang(lang) {
+      this._lang = lang;
+      this._applyLang();
+    }
+
+    _applyLang() {
+      const root = this.shadowRoot;
+      if (!root) return;
+      const en = this._lang === 'en';
+      root.querySelectorAll('[data-s]').forEach((el) => {
+        const s = STRINGS[el.dataset.s];
+        if (s) el.innerHTML = en ? s.en : s.de;
+      });
+      (this._ecusRef || []).forEach((e) => {
+        if (e._labelB) e._labelB.textContent = en ? e.nameEn : e.name;
+      });
+      (this._layersRef || []).forEach((l) => {
+        if (l._chipLbl) l._chipLbl.textContent = en ? l.labelEn : l.label;
+      });
     }
 
     async _boot() {
@@ -266,8 +301,8 @@
       } catch (err) {
         const d = document.createElement('div');
         d.className = 'miss';
-        d.innerHTML = `<strong>Fahrzeugmodell fehlt noch</strong>
-          <span>Die GLB-Datei liegt noch nicht im Projekt (Upload-Limit 30&nbsp;MB).<br>
+        d.innerHTML = `<strong data-s="missTitle">Fahrzeugmodell fehlt noch</strong>
+          <span data-s="missBody">Die GLB-Datei liegt noch nicht im Projekt (Upload-Limit 30&nbsp;MB).<br>
           Komprimiert unter <code>assets/amg-gt3.glb</code> ablegen &mdash; dann erscheint der Umriss hier.</span>`;
         this.shadowRoot.querySelector('.wrap').appendChild(d);
         this._miss = d;
@@ -336,8 +371,9 @@
 
         const el = document.createElement('div');
         el.className = 'lb';
-        el.innerHTML = `<b>${e.name}</b>`;
+        el.innerHTML = `<b>${this._lang === 'en' ? e.nameEn : e.name}</b>`;
         labelHost.appendChild(el);
+        e._labelB = el.querySelector('b');
         labels.push({ el, pos, layer: e.bus, hub: !!e.hub });
       });
 
@@ -348,14 +384,18 @@
         const b2 = document.createElement('button');
         b2.type = 'button';
         b2.setAttribute('aria-pressed', 'true');
-        b2.innerHTML = `<span class="sw" style="background:${l.color}"></span>${l.label}`;
+        b2.innerHTML = `<span class="sw" style="background:${l.color}"></span><span class="lbl">${this._lang === 'en' ? l.labelEn : l.label}</span>`;
         b2.onclick = () => {
           on[l.id] = !on[l.id];
           groups[l.id].visible = on[l.id];
           b2.setAttribute('aria-pressed', String(on[l.id]));
         };
+        l._chipLbl = b2.querySelector('.lbl');
         chips.appendChild(b2);
       });
+      this._ecusRef = ECUS;
+      this._layersRef = LAYERS;
+      this._applyLang();
 
       // --- loop -------------------------------------------------------------
       const v = new THREE.Vector3();

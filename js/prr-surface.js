@@ -65,6 +65,7 @@
     connectedCallback() {
       if (this._up) return;
       this._up = true;
+      this._lang = this._lang || 'de';
       this.attachShadow({ mode: 'open' });
       this.shadowRoot.innerHTML = `
         <style>
@@ -114,11 +115,11 @@
         <div class="wrap">
           <div class="ov">
             <div class="unit">PRR [%] · 500 kB<b></b></div>
-            <div class="hint">Ziehen · Scrollen</div>
+            <div class="hint" data-s="hint">Ziehen · Scrollen</div>
             <div class="bar"><span>0</span><span class="g"></span><span>100</span></div>
             <div class="tip"></div>
           </div>
-          <div class="load"><span class="sp"></span>Diagramm wird geladen</div>
+          <div class="load"><span class="sp"></span><span data-s="loading">Diagramm wird geladen</span></div>
         </div>`;
       this._boot();
     }
@@ -126,6 +127,23 @@
     disconnectedCallback() {
       cancelAnimationFrame(this._raf);
       this._ro && this._ro.disconnect();
+    }
+
+    setLang(lang) {
+      this._lang = lang;
+      const root = this.shadowRoot;
+      if (!root) return;
+      const en = lang === 'en';
+      const STRINGS = {
+        hint: { de: 'Ziehen · Scrollen', en: 'Drag · Scroll' },
+        loading: { de: 'Diagramm wird geladen', en: 'Loading chart' }
+      };
+      root.querySelectorAll('[data-s]').forEach((el) => {
+        const s = STRINGS[el.dataset.s];
+        if (s) el.textContent = en ? s.en : s.de;
+      });
+      if (this._axX) this._axX.textContent = en ? 'Range [m]' : 'Reichweite [m]';
+      if (this._axZ) this._axZ.textContent = en ? 'Transmission interval [s]' : 'Sendeintervall [s]';
     }
 
     async _boot() {
@@ -218,8 +236,10 @@
       const xTicks = [0, 2, 4, 6, 7].map(i => ({ el: mk('tk', String(RANGES[i])), i }));
       const zTicks = [0, 2, 4, 5, 7, 9].map(j => ({ el: mk('tk', String(INTERVALS[j])), j }));
       const yTicks = [0, 50, 100].map(v => ({ el: mk('tk', String(v)), v }));
-      const axX = mk('axl', 'Reichweite [m]');
-      const axZ = mk('axl', 'Sendeintervall [s]');
+      const axX = mk('axl', this._lang === 'en' ? 'Range [m]' : 'Reichweite [m]');
+      const axZ = mk('axl', this._lang === 'en' ? 'Transmission interval [s]' : 'Sendeintervall [s]');
+      this._axX = axX;
+      this._axZ = axZ;
 
       // --- values ----------------------------------------------------------
       const lo = new THREE.Color('#9184d9'), mid = new THREE.Color('#5fc8b0'), hi = new THREE.Color('#39ff8f');
@@ -239,7 +259,7 @@
         scen = name;
         const m = DATA[name];
         for (let j = 0; j < NZ; j++) for (let i = 0; i < NX; i++) target[j * NX + i] = m[j][i];
-        unitSub.textContent = name + ' · Mittelwert über 5 Seeds';
+        unitSub.textContent = name;
       };
       this._apply(scen);
       cur.set(target);
@@ -270,7 +290,8 @@
         const i = Math.round(((hit.point.x - X0) / W) * (NX - 1));
         const j = Math.round(((hit.point.z - Z0) / D) * (NZ - 1));
         const v = DATA[scen][Math.max(0, Math.min(NZ - 1, j))][Math.max(0, Math.min(NX - 1, i))];
-        tip.innerHTML = `<i>${RANGES[i]} m · ${INTERVALS[j]} s</i> &nbsp;${v.toFixed(2).replace('.', ',')} %`;
+        const vStr = this._lang === 'en' ? v.toFixed(2) : v.toFixed(2).replace('.', ',');
+        tip.innerHTML = `<i>${RANGES[i]} m · ${INTERVALS[j]} s</i> &nbsp;${vStr} %`;
         tip.style.opacity = '1';
         this._hover = V(px(i), py(cur[j * NX + i]), pz(j));
       });

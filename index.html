@@ -13,14 +13,22 @@
 <body>
 
 <div class="intro-overlay">
-  <div style="position:absolute; inset:0; overflow:hidden;">
+  <div class="intro-bg" aria-hidden="true">
     <div class="intro-glow"></div>
     <div class="intro-glow intro-glow--secondary"></div>
   </div>
-  <div style="position:relative; text-align:center; max-width:92vw; margin:0 auto; box-sizing:border-box;">
-    <div style="font-family:var(--font-heading); font-weight:500; font-size:clamp(2.4rem,7vw,4.6rem); color:var(--color-text); letter-spacing:0.02em;">Burak Kayabasi</div>
+  <div class="intro-content">
+    <svg class="intro-cup" width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <path class="intro-steam intro-steam-1" d="M24 4c-3 4 3 5 0 9" stroke="#39ff8f" stroke-width="2" stroke-linecap="round"/>
+      <path class="intro-steam intro-steam-2" d="M32 2c-3 4 3 5 0 9" stroke="#39ff8f" stroke-width="2" stroke-linecap="round"/>
+      <path class="intro-steam intro-steam-3" d="M40 4c-3 4 3 5 0 9" stroke="#39ff8f" stroke-width="2" stroke-linecap="round"/>
+      <path d="M14 24h30v16a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10V24z" fill="var(--color-neutral-900)" stroke="var(--color-accent-400)" stroke-width="1.6"/>
+      <path class="intro-cup-fill" d="M16.4 26.4h25.2v13.6a7.6 7.6 0 0 1-7.6 7.6h-10a7.6 7.6 0 0 1-7.6-7.6V26.4z" fill="#39ff8f"/>
+      <path d="M44 28c4.4 0 8 3.1 8 7s-3.6 7-8 7" stroke="var(--color-accent-400)" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <div class="intro-name">Burak Kayabasi</div>
     <div class="intro-rule"></div>
-    <div style="margin-top:var(--space-4); color:var(--color-neutral-300); font-size:0.95rem; letter-spacing:0.15em; text-transform:uppercase;">Software Engineer · AI &amp; Data · Embedded Systems</div>
+    <div class="intro-role">Software Engineer · AI &amp; Data · Embedded Systems</div>
   </div>
 </div>
 
@@ -29,22 +37,22 @@
 
     <div style="position:sticky; top:0; z-index:20; padding:10px clamp(12px,2.5vw,24px) 0;">
       <nav class="nav">
-        <a href="#" data-nav="home" class="nav-avatar" aria-label="Burak Kayabasi, zur Startseite">
+        <span class="nav-avatar" aria-hidden="true">
           <span style="display:flex; align-items:baseline;"><span>B</span><span>K</span></span>
-        </a>
+        </span>
         <span style="width:1px; height:20px; background:var(--color-neutral-800); flex-shrink:0;"></span>
         <div class="nav-links">
-          <a href="#" data-nav="home" class="nav-link" data-view-link="home">Home</a>
-          <a href="#" data-nav="projekte" class="nav-link" data-view-link="projekte">Projekte</a>
-          <a href="#" data-nav="werdegang" class="nav-link" data-view-link="werdegang">Werdegang</a>
-          <a href="#" data-nav="kontakt" class="nav-link" data-view-link="kontakt">Kontakt</a>
+          <a href="#" data-nav="home" class="nav-link" data-view-link="home" data-en="Home">Home</a>
+          <a href="#" data-nav="projekte" class="nav-link" data-view-link="projekte" data-en="Projects">Projekte</a>
+          <a href="#" data-nav="werdegang" class="nav-link" data-view-link="werdegang" data-en="Career">Werdegang</a>
+          <a href="#" data-nav="kontakt" class="nav-link" data-view-link="kontakt" data-en="Contact">Kontakt</a>
         </div>
         <div class="nav-actions">
           <div class="nav-lang-group">
             <a href="#" data-lang-btn="de" class="nav-lang">DE</a>
             <a href="#" data-lang-btn="en" class="nav-lang">EN</a>
           </div>
-          <a href="https://github.com/Burakayabasi" target="_blank" rel="noopener" class="nav-gh" aria-label="GitHub-Profil öffnen">
+          <a href="https://github.com/Burakayabasi" target="_blank" rel="noopener" class="nav-gh" aria-label="GitHub-Profil öffnen" data-en-aria-label="Open GitHub profile">
             <svg width="15" height="15" viewBox="0 0 16 16" fill="#39ff8f" style="display:block;">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
             </svg>
@@ -66,17 +74,17 @@
         <h1 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(2.1rem,6vw,4.1rem); line-height:1.08; letter-spacing:-0.03em; margin:0 auto; color:var(--color-text); max-width:20ch; text-wrap:balance;">
           Burak <span style="display:inline-block; background:var(--color-text); color:var(--color-bg); padding:0 0.22em; border-radius:4px;">Kayabasi</span><br><span style="color:var(--color-neutral-300);">AI · Data Science · <span style="display:inline-block; background:var(--color-text); color:var(--color-bg); padding:0 0.22em; border-radius:4px;">Embedded</span></span>
         </h1>
-        <p style="margin:var(--space-6) auto 0; max-width:52ch; color:var(--color-neutral-200); font-size:1.02rem; line-height:1.6; text-wrap:pretty;">
+        <p style="margin:var(--space-6) auto 0; max-width:52ch; color:var(--color-neutral-200); font-size:1.02rem; line-height:1.6; text-wrap:pretty;" data-en="Master's student in Computer Science at RWTH Aachen, focused on AI, data science and embedded systems. Hands-on experience in software development, data analysis and distributed-systems research.">
           Masterstudent Informatik an der RWTH Aachen mit Schwerpunkt auf KI, Data Science und eingebetteten Systemen. Praktische Erfahrung in Softwareentwicklung, Datenanalyse und der Forschung an verteilten Systemen.
         </p>
         <div style="display:flex; justify-content:center; gap:var(--space-3); margin-top:var(--space-6); flex-wrap:wrap;">
-          <a href="#" data-nav="projekte" class="home-cta home-cta-primary">Projekte ansehen <span style="font-size:0.9em;">↗</span></a>
-          <a href="assets/documents/cv.pdf" target="_blank" class="home-cta home-cta-ghost">Lebenslauf · PDF <span style="font-size:0.9em;">↗</span></a>
+          <a href="#" data-nav="projekte" class="home-cta home-cta-primary" data-en-html="View projects <span style=&quot;font-size:0.9em;&quot;>↗</span>">Projekte ansehen <span style="font-size:0.9em;">↗</span></a>
+          <a href="assets/documents/cv.pdf" target="_blank" class="home-cta home-cta-ghost" data-en-html="Resume · PDF <span style=&quot;font-size:0.9em;&quot;>↗</span>">Lebenslauf · PDF <span style="font-size:0.9em;">↗</span></a>
         </div>
       </div>
 
       <div style="position:relative; z-index:2; width:100%; margin:clamp(14px,2.5vh,34px) 0 0; pointer-events:none; display:flex; justify-content:center; align-items:center;">
-        <img src="assets/amg-gt3-render.png" alt="Drahtgittermodell eines AMG GT3 mit angedeuteter Steuergeräte-Vernetzung" style="position:relative; z-index:2; display:block; width:min(860px, 92vw); height:auto; opacity:0.9; mask-image:linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%), linear-gradient(to right, transparent 0%, #000 11%, #000 89%, transparent 100%); mask-composite:intersect; -webkit-mask-composite:source-in;">
+        <img src="assets/amg-gt3-render.png" alt="Drahtgittermodell eines AMG GT3 mit angedeuteter Steuergeräte-Vernetzung" data-en-alt="Wireframe model of an AMG GT3 with implied ECU networking" style="position:relative; z-index:2; display:block; width:min(860px, 92vw); height:auto; opacity:0.9; mask-image:linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%), linear-gradient(to right, transparent 0%, #000 11%, #000 89%, transparent 100%); mask-composite:intersect; -webkit-mask-composite:source-in;">
       </div>
     </section>
 
@@ -87,136 +95,136 @@
           <img src="assets/documents/profile-photo.png" alt="Burak Kayabasi" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;">
         </div>
         <div style="flex:1; min-width:260px;">
-          <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin:0 0 var(--space-2); line-height:1.15;">Werdegang</h2>
-          <div style="color:var(--color-accent-300); font-size:0.86rem; letter-spacing:0.06em; text-transform:uppercase;">Masterstudent Informatik · RWTH Aachen</div>
+          <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin:0 0 var(--space-2); line-height:1.15;" data-en="Career">Werdegang</h2>
+          <div style="color:var(--color-accent-300); font-size:0.86rem; letter-spacing:0.06em; text-transform:uppercase;" data-en="Master's student in Computer Science · RWTH Aachen">Masterstudent Informatik · RWTH Aachen</div>
         </div>
-        <a href="assets/documents/cv.pdf" target="_blank" class="btn" style="flex-shrink:0; background:transparent; border:1px solid #e5484d; color:#e5484d;">Lebenslauf als PDF exportieren</a>
+        <a href="assets/documents/cv.pdf" target="_blank" class="btn" style="flex-shrink:0; background:transparent; border:1px solid #e5484d; color:#e5484d;" data-en="Export résumé as PDF">Lebenslauf als PDF exportieren</a>
       </div>
 
       <div style="display:flex; align-items:baseline; gap:var(--space-4); margin:0 0 var(--space-4); padding-left:calc(var(--tl-date-w) + var(--tl-dot-w));">
-        <h3 style="font-family:var(--font-heading); font-weight:600; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--color-neutral-100); margin:0;">Berufserfahrung</h3>
+        <h3 style="font-family:var(--font-heading); font-weight:600; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--color-neutral-100); margin:0;" data-en="Professional Experience">Berufserfahrung</h3>
         <span style="flex:1; height:1px; background:linear-gradient(90deg, var(--color-neutral-800), transparent);"></span>
-        <span class="tl-section-count" style="color:var(--color-neutral-500); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase;">4 Stationen</span>
+        <span class="tl-section-count" style="color:var(--color-neutral-500); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase;" data-en="4 positions">4 Stationen</span>
       </div>
       <div style="display:flex; flex-direction:column; margin-bottom:calc(var(--space-8) * 1.1); border-bottom:1px solid color-mix(in oklab, var(--color-neutral-800) 78%, transparent);">
         <div class="tl-row">
           <div style="padding-top:25px; padding-right:var(--space-6); padding-bottom:calc(var(--space-6) * 1.25); padding-left:0; text-align:right;">
-            <div style="font-family:var(--font-heading); font-weight:600; font-size:0.8rem; letter-spacing:0.02em; color:#39ff8f;">heute</div>
-            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;">seit 10/2024</div>
-            <div style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
+            <div style="font-family:var(--font-heading); font-weight:600; font-size:0.8rem; letter-spacing:0.02em; color:#39ff8f;" data-en="present">heute</div>
+            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;" data-en="since 10/2024">seit 10/2024</div>
+            <div class="tl-loc" style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
           </div>
           <div style="position:relative; align-self:stretch; justify-self:center; width:2px; border-radius:1px; background:linear-gradient(180deg, transparent 0, transparent 29px, var(--color-accent-600) 29px, color-mix(in oklab, var(--color-accent-600) 30%, transparent) 100%);"><span style="position:absolute; left:50%; top:29px; transform:translateX(-50%); width:11px; height:11px; border-radius:50%; background:#39ff8f; box-shadow:0 0 0 4px color-mix(in oklab, #39ff8f 13%, transparent), 0 0 14px 3px color-mix(in oklab, #39ff8f 42%, transparent);"></span></div>
           <div style="padding:calc(var(--space-6) * 1.25) 0 calc(var(--space-6) * 1.4) var(--space-6); min-width:0;">
             <div style="display:flex; align-items:center; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-4);">
               <span style="display:inline-flex; align-items:center; justify-content:center; height:28px; padding:0 10px; flex-shrink:0; box-sizing:border-box; border:1px solid var(--color-neutral-800); border-radius:7px; background:color-mix(in oklab, var(--color-neutral-900) 60%, transparent);"><img src="assets/logos/fev-w.png" alt="FEV" style="display:block; max-height:16px; max-width:72px; width:auto; height:auto; object-fit:contain; opacity:0.92;"></span>
-              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;">Werkstudent Softwareentwicklung</span>
+              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;" data-en="Working Student, Software Development">Werkstudent Softwareentwicklung</span>
             </div>
             <div style="color:var(--color-neutral-400); font-size:0.86rem; margin:0 0 var(--space-4);">FEV Vehicle GmbH</div>
-            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;">Entwicklung automatisierter Analyse-Tools für Dauerlauf-, Mess- und Versuchsdaten sowie ML-/KI-gestützter Automatisierungslösungen. Prototyp und anschließende Mitentwicklung einer internen Web-Plattform für Fahrzeugmanagement und -analyse mit React-Frontend und Django-REST-Backend.</div>
+            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;" data-en="Development of automated analysis tools for endurance-run, measurement and test data, plus ML/AI-based automation solutions. Built a prototype and helped develop an internal web platform for vehicle management and analysis, with a React frontend and Django REST backend.">Entwicklung automatisierter Analyse-Tools für Dauerlauf-, Mess- und Versuchsdaten sowie ML-/KI-gestützter Automatisierungslösungen. Prototyp und anschließende Mitentwicklung einer internen Web-Plattform für Fahrzeugmanagement und -analyse mit React-Frontend und Django-REST-Backend.</div>
           </div>
         </div>
         <div class="tl-row" style="border-top:1px solid color-mix(in oklab, var(--color-neutral-800) 78%, transparent);">
           <div style="padding-top:25px; padding-right:var(--space-6); padding-bottom:calc(var(--space-6) * 1.25); padding-left:0; text-align:right;">
             <div style="font-family:var(--font-heading); font-weight:600; font-size:0.8rem; letter-spacing:0.02em; color:var(--color-neutral-200); font-variant-numeric:tabular-nums;">09/2024</div>
-            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;">ab 07/2024</div>
-            <div style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
+            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;" data-en="from 07/2024">ab 07/2024</div>
+            <div class="tl-loc" style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
           </div>
           <div style="position:relative; align-self:stretch; justify-self:center; width:2px; border-radius:1px; background:linear-gradient(180deg, color-mix(in oklab, var(--color-accent-600) 30%, transparent), color-mix(in oklab, var(--color-accent-600) 30%, transparent));"><span style="position:absolute; left:50%; top:29px; transform:translateX(-50%); width:11px; height:11px; border-radius:50%; box-sizing:border-box; background:var(--color-bg); border:2px solid color-mix(in oklab, var(--color-accent-600) 75%, transparent);"></span></div>
           <div style="padding:calc(var(--space-6) * 1.25) 0 calc(var(--space-6) * 1.4) var(--space-6); min-width:0;">
             <div style="display:flex; align-items:center; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-4);">
               <span style="display:inline-flex; align-items:center; justify-content:center; height:28px; padding:0 10px; flex-shrink:0; box-sizing:border-box; border:1px solid var(--color-neutral-800); border-radius:7px; background:color-mix(in oklab, var(--color-neutral-900) 60%, transparent);"><img src="assets/logos/ika-w.png" alt="ika, Institut für Kraftfahrzeuge der RWTH Aachen" style="display:block; max-height:18px; max-width:72px; width:auto; height:auto; object-fit:contain; opacity:0.92;"></span>
-              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;">Wissenschaftliche Hilfskraft</span>
+              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;" data-en="Student Research Assistant">Wissenschaftliche Hilfskraft</span>
             </div>
-            <div style="color:var(--color-neutral-400); font-size:0.86rem; margin:0 0 var(--space-4);">Institut für Kraftfahrzeuge, RWTH Aachen University</div>
-            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;">Vergleich und Simulation von Scheduling-Algorithmen zur Orchestrierung von Fahrzeugen für verteiltes Rechnen; Integration in eine Orchestrierungssoftware.</div>
+            <div style="color:var(--color-neutral-400); font-size:0.86rem; margin:0 0 var(--space-4);" data-en="Institute for Automotive Engineering, RWTH Aachen University">Institut für Kraftfahrzeuge, RWTH Aachen University</div>
+            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;" data-en="Comparison and simulation of scheduling algorithms for orchestrating vehicles in distributed computing; integration into an orchestration software.">Vergleich und Simulation von Scheduling-Algorithmen zur Orchestrierung von Fahrzeugen für verteiltes Rechnen; Integration in eine Orchestrierungssoftware.</div>
           </div>
         </div>
         <div class="tl-row" style="border-top:1px solid color-mix(in oklab, var(--color-neutral-800) 78%, transparent);">
           <div style="padding-top:25px; padding-right:var(--space-6); padding-bottom:calc(var(--space-6) * 1.25); padding-left:0; text-align:right;">
             <div style="font-family:var(--font-heading); font-weight:600; font-size:0.8rem; letter-spacing:0.02em; color:var(--color-neutral-200); font-variant-numeric:tabular-nums;">03/2024</div>
-            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;">ab 09/2023</div>
-            <div style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Affalterbach</div>
+            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;" data-en="from 09/2023">ab 09/2023</div>
+            <div class="tl-loc" style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Affalterbach</div>
           </div>
           <div style="position:relative; align-self:stretch; justify-self:center; width:2px; border-radius:1px; background:linear-gradient(180deg, color-mix(in oklab, var(--color-accent-600) 30%, transparent), color-mix(in oklab, var(--color-accent-600) 30%, transparent));"><span style="position:absolute; left:50%; top:29px; transform:translateX(-50%); width:11px; height:11px; border-radius:50%; box-sizing:border-box; background:var(--color-bg); border:2px solid color-mix(in oklab, var(--color-accent-600) 75%, transparent);"></span></div>
           <div style="padding:calc(var(--space-6) * 1.25) 0 calc(var(--space-6) * 1.4) var(--space-6); min-width:0;">
             <div style="display:flex; align-items:center; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-4);">
               <span style="display:inline-flex; align-items:center; justify-content:center; height:28px; padding:0 10px; flex-shrink:0; box-sizing:border-box; border:1px solid var(--color-neutral-800); border-radius:7px; background:color-mix(in oklab, var(--color-neutral-900) 60%, transparent);"><img src="assets/logos/amg-w.png" alt="Mercedes-AMG" style="display:block; max-height:11px; max-width:72px; width:auto; height:auto; object-fit:contain; opacity:0.92;"></span>
-              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;">Praktikant Funktionsarchitekt</span>
+              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;" data-en="Intern, Function Architecture">Praktikant Funktionsarchitekt</span>
             </div>
             <div style="color:var(--color-neutral-400); font-size:0.86rem; margin:0 0 var(--space-4);">Mercedes-AMG GmbH</div>
-            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;">Automatisierte Voranalyse von Busruhe- und Ruhestromauffälligkeiten, Auswertelogik mit CAPL in CANoe, Komponententests im Bereich Vernetzung.</div>
+            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;" data-en="Automated pre-analysis of bus-idle and quiescent-current anomalies, evaluation logic written in CAPL within CANoe, component tests in the networking domain.">Automatisierte Voranalyse von Busruhe- und Ruhestromauffälligkeiten, Auswertelogik mit CAPL in CANoe, Komponententests im Bereich Vernetzung.</div>
           </div>
         </div>
         <div class="tl-row" style="border-top:1px solid color-mix(in oklab, var(--color-neutral-800) 78%, transparent);">
           <div style="padding-top:25px; padding-right:var(--space-6); padding-bottom:calc(var(--space-6) * 1.25); padding-left:0; text-align:right;">
             <div style="font-family:var(--font-heading); font-weight:600; font-size:0.8rem; letter-spacing:0.02em; color:var(--color-neutral-200); font-variant-numeric:tabular-nums;">03/2023</div>
-            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;">ab 10/2022</div>
-            <div style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
+            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;" data-en="from 10/2022">ab 10/2022</div>
+            <div class="tl-loc" style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
           </div>
           <div style="position:relative; align-self:stretch; justify-self:center; width:2px; border-radius:1px; background:linear-gradient(180deg, color-mix(in oklab, var(--color-accent-600) 30%, transparent) 0, color-mix(in oklab, var(--color-accent-600) 30%, transparent) 55%, transparent 100%);"><span style="position:absolute; left:50%; top:29px; transform:translateX(-50%); width:11px; height:11px; border-radius:50%; box-sizing:border-box; background:var(--color-bg); border:2px solid color-mix(in oklab, var(--color-accent-600) 75%, transparent);"></span></div>
           <div style="padding:calc(var(--space-6) * 1.25) 0 calc(var(--space-6) * 1.4) var(--space-6); min-width:0;">
             <div style="display:flex; align-items:center; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-4);">
               <span style="display:inline-flex; align-items:center; justify-content:center; height:28px; padding:0 10px; flex-shrink:0; box-sizing:border-box; border:1px solid var(--color-neutral-800); border-radius:7px; background:color-mix(in oklab, var(--color-neutral-900) 60%, transparent);"><img src="assets/logos/kisters-w.png" alt="KISTERS AG" style="display:block; max-height:12px; max-width:72px; width:auto; height:auto; object-fit:contain; opacity:0.92;"></span>
-              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;">Praktikant Softwareentwicklung</span>
+              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;" data-en="Software Development Intern">Praktikant Softwareentwicklung</span>
             </div>
             <div style="color:var(--color-neutral-400); font-size:0.86rem; margin:0 0 var(--space-4);">KISTERS AG</div>
-            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;">Mitentwicklung einer Webanwendung für digitale Zwillinge, Gestaltung von UI/UX-Elementen, Unterstützung der Projektleitung.</div>
+            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;" data-en="Co-developed a web application for digital twins, designed UI/UX elements, supported project management.">Mitentwicklung einer Webanwendung für digitale Zwillinge, Gestaltung von UI/UX-Elementen, Unterstützung der Projektleitung.</div>
           </div>
         </div>
       </div>
 
       <div style="display:flex; align-items:baseline; gap:var(--space-4); margin:0 0 var(--space-4); padding-left:calc(var(--tl-date-w) + var(--tl-dot-w));">
-        <h3 style="font-family:var(--font-heading); font-weight:600; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--color-neutral-100); margin:0;">Ausbildung</h3>
+        <h3 style="font-family:var(--font-heading); font-weight:600; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--color-neutral-100); margin:0;" data-en="Education">Ausbildung</h3>
         <span style="flex:1; height:1px; background:linear-gradient(90deg, var(--color-neutral-800), transparent);"></span>
-        <span class="tl-section-count" style="color:var(--color-neutral-500); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase;">2 Abschlüsse</span>
+        <span class="tl-section-count" style="color:var(--color-neutral-500); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase;" data-en="2 degrees">2 Abschlüsse</span>
       </div>
       <div style="display:flex; flex-direction:column; margin-bottom:calc(var(--space-8) * 1.1); border-bottom:1px solid color-mix(in oklab, var(--color-neutral-800) 78%, transparent);">
         <div class="tl-row">
           <div style="padding-top:25px; padding-right:var(--space-6); padding-bottom:calc(var(--space-6) * 1.25); padding-left:0; text-align:right;">
-            <div style="font-family:var(--font-heading); font-weight:600; font-size:0.8rem; letter-spacing:0.02em; color:#39ff8f;">heute</div>
-            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;">seit 10/2023</div>
-            <div style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
+            <div style="font-family:var(--font-heading); font-weight:600; font-size:0.8rem; letter-spacing:0.02em; color:#39ff8f;" data-en="present">heute</div>
+            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;" data-en="since 10/2023">seit 10/2023</div>
+            <div class="tl-loc" style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
           </div>
           <div style="position:relative; align-self:stretch; justify-self:center; width:2px; border-radius:1px; background:linear-gradient(180deg, transparent 0, transparent 29px, var(--color-accent-600) 29px, color-mix(in oklab, var(--color-accent-600) 30%, transparent) 100%);"><span style="position:absolute; left:50%; top:29px; transform:translateX(-50%); width:11px; height:11px; border-radius:50%; background:#39ff8f; box-shadow:0 0 0 4px color-mix(in oklab, #39ff8f 13%, transparent), 0 0 14px 3px color-mix(in oklab, #39ff8f 42%, transparent);"></span></div>
           <div style="padding:calc(var(--space-6) * 1.25) 0 calc(var(--space-6) * 1.4) var(--space-6); min-width:0;">
             <div style="display:flex; align-items:center; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-4);">
               <span style="display:inline-flex; align-items:center; justify-content:center; height:28px; padding:0 10px; flex-shrink:0; box-sizing:border-box; border:1px solid var(--color-neutral-800); border-radius:7px; background:color-mix(in oklab, var(--color-neutral-900) 60%, transparent);"><img src="assets/logos/rwth-w.png" alt="RWTH Aachen University" style="display:block; max-height:15px; max-width:72px; width:auto; height:auto; object-fit:contain; opacity:0.92;"></span>
-              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;">M.Sc. Informatik</span>
+              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;" data-en="M.Sc. Computer Science">M.Sc. Informatik</span>
             </div>
             <div style="color:var(--color-neutral-400); font-size:0.86rem; margin:0 0 var(--space-4);">RWTH Aachen University</div>
-            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;">Vertiefung: Künstliche Intelligenz, Data Science, Embedded Systems.<br>Masterarbeit: Entwicklung einer dezentralen heuristischen Strategie für Task-Offloading in Fahrzeugnetzwerken.</div>
+            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;" data-en-html="Specialization: Artificial Intelligence, Data Science, Embedded Systems.<br>Master&#39;s thesis: Development of a decentralized heuristic strategy for task offloading in vehicular networks.">Vertiefung: Künstliche Intelligenz, Data Science, Embedded Systems.<br>Masterarbeit: Entwicklung einer dezentralen heuristischen Strategie für Task-Offloading in Fahrzeugnetzwerken.</div>
           </div>
         </div>
         <div class="tl-row" style="border-top:1px solid color-mix(in oklab, var(--color-neutral-800) 78%, transparent);">
           <div style="padding-top:25px; padding-right:var(--space-6); padding-bottom:calc(var(--space-6) * 1.25); padding-left:0; text-align:right;">
             <div style="font-family:var(--font-heading); font-weight:600; font-size:0.8rem; letter-spacing:0.02em; color:var(--color-neutral-200); font-variant-numeric:tabular-nums;">09/2023</div>
-            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;">ab 10/2020</div>
-            <div style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
+            <div style="font-size:0.74rem; color:var(--color-neutral-500); font-variant-numeric:tabular-nums; margin-top:3px;" data-en="from 10/2020">ab 10/2020</div>
+            <div class="tl-loc" style="margin-top:9px; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--color-neutral-600);">Aachen</div>
           </div>
           <div style="position:relative; align-self:stretch; justify-self:center; width:2px; border-radius:1px; background:linear-gradient(180deg, color-mix(in oklab, var(--color-accent-600) 30%, transparent) 0, color-mix(in oklab, var(--color-accent-600) 30%, transparent) 55%, transparent 100%);"><span style="position:absolute; left:50%; top:29px; transform:translateX(-50%); width:11px; height:11px; border-radius:50%; box-sizing:border-box; background:var(--color-bg); border:2px solid color-mix(in oklab, var(--color-accent-600) 75%, transparent);"></span></div>
           <div style="padding:calc(var(--space-6) * 1.25) 0 calc(var(--space-6) * 1.4) var(--space-6); min-width:0;">
             <div style="display:flex; align-items:center; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-4);">
               <span style="display:inline-flex; align-items:center; justify-content:center; height:28px; padding:0 10px; flex-shrink:0; box-sizing:border-box; border:1px solid var(--color-neutral-800); border-radius:7px; background:color-mix(in oklab, var(--color-neutral-900) 60%, transparent);"><img src="assets/logos/rwth-w.png" alt="RWTH Aachen University" style="display:block; max-height:15px; max-width:72px; width:auto; height:auto; object-fit:contain; opacity:0.92;"></span>
-              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;">B.Sc. Informatik</span>
+              <span style="font-family:var(--font-heading); font-weight:500; font-size:1.02rem; color:var(--color-text); line-height:1.25;" data-en="B.Sc. Computer Science">B.Sc. Informatik</span>
             </div>
             <div style="color:var(--color-neutral-400); font-size:0.86rem; margin:0 0 var(--space-4);">RWTH Aachen University</div>
-            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;">Vertiefung: Maschinenbau.<br>Bachelorarbeit: Online-Färbung außenplanarer und SP-Graphen mit strukturiertem Advice.</div>
+            <div style="color:var(--color-neutral-200); font-size:0.92rem; line-height:1.75; max-width:62ch; text-wrap:pretty;" data-en-html="Specialization: Mechanical Engineering.<br>Bachelor&#39;s thesis: Online coloring of outerplanar and SP graphs with structured advice.">Vertiefung: Maschinenbau.<br>Bachelorarbeit: Online-Färbung außenplanarer und SP-Graphen mit strukturiertem Advice.</div>
           </div>
         </div>
       </div>
 
       <div style="margin-top:calc(var(--space-8) * 1.2);">
         <div style="display:flex; align-items:baseline; gap:var(--space-4); margin-bottom:var(--space-4);">
-          <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin:0;">Kompetenzen</h2>
-          <span style="color:var(--color-neutral-500); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase;">7 Gruppen</span>
+          <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin:0;" data-en="Skills">Kompetenzen</h2>
+          <span style="color:var(--color-neutral-500); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase;" data-en="7 groups">7 Gruppen</span>
         </div>
         <details open style="border-top:1px solid var(--color-neutral-800); border-bottom:1px solid var(--color-neutral-800);">
           <summary style="cursor:pointer; padding:var(--space-4) 0; display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); font-family:var(--font-heading); font-size:0.95rem; color:var(--color-text); list-style:none;">
-            <span>Programmiersprachen</span>
+            <span data-en="Programming Languages">Programmiersprachen</span>
             <span style="color:var(--color-neutral-400); font-size:0.8rem; font-variant-numeric:tabular-nums;">12</span>
           </summary>
           <div style="padding:0 0 var(--space-4);">
-            <div style="color:var(--color-neutral-500); font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:var(--space-3);">Schwerpunkte</div>
+            <div style="color:var(--color-neutral-500); font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:var(--space-3);" data-en="Focus areas">Schwerpunkte</div>
             <div style="display:flex; flex-wrap:wrap; gap:var(--space-3);">
             <span class="tag tag-outline">Python</span>
             <span class="tag tag-outline">C++</span>
@@ -230,7 +238,7 @@
             </div>
           </div>
           <div style="padding:0 0 var(--space-4);">
-            <div style="color:var(--color-neutral-500); font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:var(--space-3);">Weitere Erfahrung</div>
+            <div style="color:var(--color-neutral-500); font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:var(--space-3);" data-en="Additional experience">Weitere Erfahrung</div>
             <div style="display:flex; flex-wrap:wrap; gap:var(--space-3);">
             <span class="tag tag-outline">Go</span>
             <span class="tag tag-outline">Prolog</span>
@@ -240,7 +248,7 @@
         </details>
         <details style="border-bottom:1px solid var(--color-neutral-800);">
           <summary style="cursor:pointer; padding:var(--space-4) 0; display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); font-family:var(--font-heading); font-size:0.95rem; color:var(--color-text); list-style:none;">
-            <span>Entwicklung & Dokumentation</span>
+            <span data-en="Development &amp; Documentation">Entwicklung & Dokumentation</span>
             <span style="color:var(--color-neutral-400); font-size:0.8rem; font-variant-numeric:tabular-nums;">8</span>
           </summary>
           <div style="display:flex; flex-wrap:wrap; gap:var(--space-3); padding:0 0 var(--space-4);">
@@ -256,7 +264,7 @@
         </details>
         <details style="border-bottom:1px solid var(--color-neutral-800);">
           <summary style="cursor:pointer; padding:var(--space-4) 0; display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); font-family:var(--font-heading); font-size:0.95rem; color:var(--color-text); list-style:none;">
-            <span>Frameworks & Technologien</span>
+            <span data-en="Frameworks &amp; Technologies">Frameworks & Technologien</span>
             <span style="color:var(--color-neutral-400); font-size:0.8rem; font-variant-numeric:tabular-nums;">6</span>
           </summary>
           <div style="display:flex; flex-wrap:wrap; gap:var(--space-3); padding:0 0 var(--space-4);">
@@ -287,28 +295,28 @@
         </details>
         <details style="border-bottom:1px solid var(--color-neutral-800);">
           <summary style="cursor:pointer; padding:var(--space-4) 0; display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); font-family:var(--font-heading); font-size:0.95rem; color:var(--color-text); list-style:none;">
-            <span>Technische Fachgebiete</span>
+            <span data-en="Technical Fields">Technische Fachgebiete</span>
             <span style="color:var(--color-neutral-400); font-size:0.8rem; font-variant-numeric:tabular-nums;">13</span>
           </summary>
           <div style="display:flex; flex-wrap:wrap; gap:var(--space-3); padding:0 0 var(--space-4);">
-            <span class="tag tag-outline">Softwareentwicklung</span>
+            <span class="tag tag-outline" data-en="Software Development">Softwareentwicklung</span>
             <span class="tag tag-outline">Data Science</span>
-            <span class="tag tag-outline">Künstliche Intelligenz</span>
+            <span class="tag tag-outline" data-en="Artificial Intelligence">Künstliche Intelligenz</span>
             <span class="tag tag-outline">Embedded Systems</span>
-            <span class="tag tag-outline">Algorithmen & Komplexität</span>
-            <span class="tag tag-outline">V2X-Systeme</span>
-            <span class="tag tag-outline">E/E-Architektur</span>
-            <span class="tag tag-outline">Fahrzeugbusse</span>
-            <span class="tag tag-outline">Funkkommunikation</span>
-            <span class="tag tag-outline">Luftverkehrssysteme</span>
-            <span class="tag tag-outline">Mechanik</span>
-            <span class="tag tag-outline">Regelungstechnik</span>
-            <span class="tag tag-outline">Maschinengestaltung</span>
+            <span class="tag tag-outline" data-en="Algorithms &amp; Complexity">Algorithmen & Komplexität</span>
+            <span class="tag tag-outline" data-en="V2X Systems">V2X-Systeme</span>
+            <span class="tag tag-outline" data-en="E/E Architecture">E/E-Architektur</span>
+            <span class="tag tag-outline" data-en="Vehicle Buses">Fahrzeugbusse</span>
+            <span class="tag tag-outline" data-en="Wireless Communication">Funkkommunikation</span>
+            <span class="tag tag-outline" data-en="Air Traffic Systems">Luftverkehrssysteme</span>
+            <span class="tag tag-outline" data-en="Mechanics">Mechanik</span>
+            <span class="tag tag-outline" data-en="Control Engineering">Regelungstechnik</span>
+            <span class="tag tag-outline" data-en="Machine Design">Maschinengestaltung</span>
           </div>
         </details>
         <details style="border-bottom:1px solid var(--color-neutral-800);">
           <summary style="cursor:pointer; padding:var(--space-4) 0; display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); font-family:var(--font-heading); font-size:0.95rem; color:var(--color-text); list-style:none;">
-            <span>Betriebssysteme</span>
+            <span data-en="Operating Systems">Betriebssysteme</span>
             <span style="color:var(--color-neutral-400); font-size:0.8rem; font-variant-numeric:tabular-nums;">3</span>
           </summary>
           <div style="display:flex; flex-wrap:wrap; gap:var(--space-3); padding:0 0 var(--space-4);">
@@ -319,13 +327,13 @@
         </details>
         <details style="border-bottom:1px solid var(--color-neutral-800);">
           <summary style="cursor:pointer; padding:var(--space-4) 0; display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); font-family:var(--font-heading); font-size:0.95rem; color:var(--color-text); list-style:none;">
-            <span>Sprachen</span>
+            <span data-en="Languages">Sprachen</span>
             <span style="color:var(--color-neutral-400); font-size:0.8rem; font-variant-numeric:tabular-nums;">3</span>
           </summary>
           <div style="display:flex; flex-wrap:wrap; gap:var(--space-3); padding:0 0 var(--space-4);">
-            <span class="tag tag-outline">Deutsch (Muttersprache)</span>
-            <span class="tag tag-outline">Türkisch (Muttersprache)</span>
-            <span class="tag tag-outline">Englisch (fließend)</span>
+            <span class="tag tag-outline" data-en="German (native)">Deutsch (Muttersprache)</span>
+            <span class="tag tag-outline" data-en="Turkish (native)">Türkisch (Muttersprache)</span>
+            <span class="tag tag-outline" data-en="English (fluent)">Englisch (fließend)</span>
           </div>
         </details>
       </div>
@@ -333,7 +341,7 @@
 
     <!-- ============================= PROJEKTE ============================= -->
     <section class="view" data-view="projekte" style="max-width:960px; margin:0 auto; padding:calc(var(--space-8) * 2) var(--space-6) var(--space-8); width:100%; box-sizing:border-box;">
-      <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-6);">Projekte</h2>
+      <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-6);" data-en="Projects">Projekte</h2>
       <div style="display:flex; flex-direction:column; gap:calc(var(--space-8) * 1.1);">
         <article style="position:relative;">
           <div style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
@@ -346,8 +354,8 @@
               <car-net style="position:absolute; inset:0;"></car-net>
             </div>
             <div style="padding:calc(var(--space-4) * 1.4);">
-              <div style="font-family:var(--font-heading); font-weight:500; font-size:1.15rem; color:var(--color-text); line-height:1.35; margin-bottom:var(--space-3);">Automatisierte Voranalyse der Vernetzung von Fahrzeugen</div>
-              <div style="color:var(--color-neutral-200); font-size:0.95rem; line-height:1.65; max-width:66ch; text-wrap:pretty;">Tool zur automatisierten Analyse des Busruhe- und Ruhestromverhaltens eines Fahrzeugs, das die Auffälligkeiten in einer Analyseübersicht zusammenführt.</div>
+              <div style="font-family:var(--font-heading); font-weight:500; font-size:1.15rem; color:var(--color-text); line-height:1.35; margin-bottom:var(--space-3);" data-en="Automated Pre-Analysis of Vehicle Networking">Automatisierte Voranalyse der Vernetzung von Fahrzeugen</div>
+              <div style="color:var(--color-neutral-200); font-size:0.95rem; line-height:1.65; max-width:66ch; text-wrap:pretty;" data-en="A tool for automated analysis of a vehicle's bus-idle and quiescent-current behavior, consolidating anomalies into one analysis overview.">Tool zur automatisierten Analyse des Busruhe- und Ruhestromverhaltens eines Fahrzeugs, das die Auffälligkeiten in einer Analyseübersicht zusammenführt.</div>
               <div style="display:flex; flex-wrap:wrap; gap:var(--space-3); margin-top:var(--space-4);">
                 <span class="tag tag-outline">CANoe</span>
                 <span class="tag tag-outline">CAPL</span>
@@ -356,8 +364,8 @@
                 <span class="tag tag-outline">PowerShell</span>
               </div>
               <div style="display:flex; gap:var(--space-4); margin-top:var(--space-4); padding-top:var(--space-4); border-top:1px solid var(--color-neutral-800);">
-                <div style="color:var(--color-accent-300); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; flex-shrink:0; width:52px; padding-top:2px;">Ziel</div>
-                <div style="color:var(--color-neutral-200); font-size:0.9rem; line-height:1.6; max-width:62ch; text-wrap:pretty;">Funktionsarchitekten können ein Fahrzeug in der Entwicklung anhand der Analyseübersicht bewerten und Auffälligkeiten unmittelbar erkennen. Der bislang aufwendige manuelle Prozess entfällt damit nahezu vollständig.</div>
+                <div style="color:var(--color-accent-300); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; flex-shrink:0; width:52px; padding-top:2px;" data-en="Goal">Ziel</div>
+                <div style="color:var(--color-neutral-200); font-size:0.9rem; line-height:1.6; max-width:62ch; text-wrap:pretty;" data-en="Function architects can assess a vehicle under development from the analysis overview and spot anomalies immediately, largely eliminating what used to be a laborious manual process.">Funktionsarchitekten können ein Fahrzeug in der Entwicklung anhand der Analyseübersicht bewerten und Auffälligkeiten unmittelbar erkennen. Der bislang aufwendige manuelle Prozess entfällt damit nahezu vollständig.</div>
               </div>
             </div>
           </div>
@@ -372,11 +380,11 @@
             <div style="position:relative; width:100%; aspect-ratio:16/9; background:#0f1118; border-bottom:1px solid var(--color-neutral-800); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-4); overflow:hidden;">
               <div style="position:absolute; inset:0; opacity:0.5; background-image:repeating-linear-gradient(115deg, transparent 0 22px, color-mix(in oklab, var(--color-neutral-800) 55%, transparent) 22px 23px);"></div>
               <span style="position:relative; font-family:var(--font-heading); font-weight:700; font-size:clamp(1.6rem,4.4vw,2.9rem); letter-spacing:-0.02em; line-height:1; background:var(--color-text); color:var(--color-bg); padding:0.1em 0.24em; border-radius:5px;">Censored</span>
-              <span style="position:relative; color:var(--color-neutral-400); font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase;">Platzhalter folgt</span>
+              <span style="position:relative; color:var(--color-neutral-400); font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase;" data-en="Placeholder to follow">Platzhalter folgt</span>
             </div>
             <div style="padding:calc(var(--space-4) * 1.4);">
-              <div style="font-family:var(--font-heading); font-weight:500; font-size:1.15rem; color:var(--color-text); line-height:1.35; margin-bottom:var(--space-3);">Interne Plattform für Fahrzeugmanagement und -analyse</div>
-              <div style="color:var(--color-neutral-200); font-size:0.95rem; line-height:1.65; max-width:66ch; text-wrap:pretty;">Prototyp und anschließende Mitentwicklung einer Web-Plattform, über die Fahrzeugdaten verwaltet und ausgewertet werden.</div>
+              <div style="font-family:var(--font-heading); font-weight:500; font-size:1.15rem; color:var(--color-text); line-height:1.35; margin-bottom:var(--space-3);" data-en="Internal Platform for Vehicle Management and Analysis">Interne Plattform für Fahrzeugmanagement und -analyse</div>
+              <div style="color:var(--color-neutral-200); font-size:0.95rem; line-height:1.65; max-width:66ch; text-wrap:pretty;" data-en="A prototype, followed by co-development of a web platform for managing and evaluating vehicle data.">Prototyp und anschließende Mitentwicklung einer Web-Plattform, über die Fahrzeugdaten verwaltet und ausgewertet werden.</div>
               <div style="display:flex; flex-wrap:wrap; gap:var(--space-3); margin-top:var(--space-4);">
                 <span class="tag tag-outline">React</span>
                 <span class="tag tag-outline">JavaScript</span>
@@ -385,8 +393,8 @@
                 <span class="tag tag-outline">PostgreSQL</span>
               </div>
               <div style="display:flex; gap:var(--space-4); margin-top:var(--space-4); padding-top:var(--space-4); border-top:1px solid var(--color-neutral-800);">
-                <div style="color:var(--color-accent-300); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; flex-shrink:0; width:52px; padding-top:2px;">Ziel</div>
-                <div style="color:var(--color-neutral-200); font-size:0.9rem; line-height:1.6; max-width:62ch; text-wrap:pretty;">Der Prototyp sollte die geplante Lösung anhand eines realen Technologie-Stacks greifbar machen. Darauf folgte die weitere Entwicklung gemeinsam mit einem internationalen Softwareteam, dessen fachliche Begleitung ich als Werkstudent in Teilverantwortung übernommen habe, von der Bewertung der Umsetzung bis zum Rollout.</div>
+                <div style="color:var(--color-accent-300); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; flex-shrink:0; width:52px; padding-top:2px;" data-en="Goal">Ziel</div>
+                <div style="color:var(--color-neutral-200); font-size:0.9rem; line-height:1.6; max-width:62ch; text-wrap:pretty;" data-en="The prototype was meant to make the planned solution tangible using a real technology stack. Further development then continued together with an international software team, whose technical guidance I partly took on as a working student, from evaluating the implementation through to rollout.">Der Prototyp sollte die geplante Lösung anhand eines realen Technologie-Stacks greifbar machen. Darauf folgte die weitere Entwicklung gemeinsam mit einem internationalen Softwareteam, dessen fachliche Begleitung ich als Werkstudent in Teilverantwortung übernommen habe, von der Bewertung der Umsetzung bis zum Rollout.</div>
               </div>
             </div>
           </div>
@@ -395,11 +403,11 @@
           <div style="display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-4);">
             <span style="font-family:var(--font-heading); font-weight:600; font-size:1.05rem; color:var(--color-accent); font-variant-numeric:tabular-nums; letter-spacing:0.02em;">2026</span>
             <span style="flex:1; height:1px; background:linear-gradient(90deg, var(--color-neutral-800), transparent);"></span>
-            <span style="color:var(--color-neutral-400); font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;">Masterarbeit · RWTH Aachen University</span>
+            <span style="color:var(--color-neutral-400); font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;" data-en="Master's Thesis · RWTH Aachen University">Masterarbeit · RWTH Aachen University</span>
           </div>
           <div class="proj-card">
             <div style="display:flex; align-items:center; gap:var(--space-3); flex-wrap:wrap; padding:var(--space-3) calc(var(--space-4) * 1.4); border-bottom:1px solid var(--color-neutral-800);">
-              <span style="color:var(--color-neutral-400); font-size:0.66rem; letter-spacing:0.16em; text-transform:uppercase; margin-right:2px;">Szenario</span>
+              <span style="color:var(--color-neutral-400); font-size:0.66rem; letter-spacing:0.16em; text-transform:uppercase; margin-right:2px;" data-en="Scenario">Szenario</span>
               <div style="display:flex; gap:var(--space-2); flex-wrap:wrap;">
                 <button type="button" class="scen-chip" data-set-scenario="Melaten" data-active="true">Melaten</button>
                 <button type="button" class="scen-chip" data-set-scenario="Aachen">Aachen</button>
@@ -412,10 +420,10 @@
                   <scenario-map scenario="Melaten" style="position:absolute; inset:0;"></scenario-map>
                 </div>
                 <figcaption style="padding:var(--space-4) calc(var(--space-4) * 1.2); border-top:1px solid var(--color-neutral-800); color:var(--color-neutral-200); font-size:0.78rem; letter-spacing:0.02em;">
-                  <span style="display:block; color:var(--color-accent-300); font-size:0.66rem; letter-spacing:0.16em; text-transform:uppercase; margin-bottom:4px;">Straßennetz</span>
+                  <span style="display:block; color:var(--color-accent-300); font-size:0.66rem; letter-spacing:0.16em; text-transform:uppercase; margin-bottom:4px;" data-en="Road Network">Straßennetz</span>
                   <span class="scen-cap" data-scenario-caption="Melaten" data-active="true">Campus Melaten, Aachen</span>
-                  <span class="scen-cap" data-scenario-caption="Aachen">Innenstadt Aachen</span>
-                  <span class="scen-cap" data-scenario-caption="Jackerath">Autobahnkreuz Jackerath</span>
+                  <span class="scen-cap" data-scenario-caption="Aachen" data-en="Aachen city centre">Innenstadt Aachen</span>
+                  <span class="scen-cap" data-scenario-caption="Jackerath" data-en="Jackerath motorway junction">Autobahnkreuz Jackerath</span>
                 </figcaption>
               </figure>
               <figure style="margin:0; position:relative; background:#0f1118; display:flex; flex-direction:column; min-width:0; border-left:1px solid var(--color-neutral-800);">
@@ -424,20 +432,20 @@
                   <div style="position:absolute; top:13px; right:15px; display:flex; flex-direction:column; align-items:flex-end; gap:4px; padding:8px 14px 9px; border-radius:14px; border:1px solid color-mix(in oklab, #39ff8f 46%, transparent); background:color-mix(in oklab, #071a10 78%, transparent); backdrop-filter:blur(6px); pointer-events:none; text-align:right; max-width:calc(100% - 30px);">
                     <span style="display:flex; align-items:center; gap:8px; line-height:1;">
                       <span style="flex-shrink:0; width:14px; height:14px; border-radius:50%; box-sizing:border-box; display:flex; align-items:center; justify-content:center; padding-top:1px; font-family:var(--font-heading); font-size:10px; font-weight:700; line-height:1; color:#39ff8f; border:1px solid color-mix(in oklab, #39ff8f 70%, transparent); box-shadow:0 0 8px 1px color-mix(in oklab, #39ff8f 28%, transparent);">!</span>
-                      <span style="font-family:var(--font-heading); font-size:0.6rem; letter-spacing:0.16em; text-transform:uppercase; color:#39ff8f; line-height:1;">Reale Daten</span>
+                      <span style="font-family:var(--font-heading); font-size:0.6rem; letter-spacing:0.16em; text-transform:uppercase; color:#39ff8f; line-height:1;" data-en="Real Data">Reale Daten</span>
                     </span>
-                    <span style="font-family:var(--font-heading); font-size:0.6rem; letter-spacing:0.02em; line-height:1.5; color:#9fe9c0;">Teilergebnisse der Thesis</span>
+                    <span style="font-family:var(--font-heading); font-size:0.6rem; letter-spacing:0.02em; line-height:1.5; color:#9fe9c0;" data-en="Partial results from the thesis">Teilergebnisse der Thesis</span>
                   </div>
                 </div>
                 <figcaption style="flex:1; padding:var(--space-4) calc(var(--space-4) * 1.2); border-top:1px solid var(--color-neutral-800); color:var(--color-neutral-200); font-size:0.78rem; letter-spacing:0.02em;">
-                  <span style="display:block; color:var(--color-accent-300); font-size:0.66rem; letter-spacing:0.16em; text-transform:uppercase; margin-bottom:4px;">Darstellung</span>
-                  Packet Reception Rate (PRR) basierend auf Reichweite und Sendeintervall
+                  <span style="display:block; color:var(--color-accent-300); font-size:0.66rem; letter-spacing:0.16em; text-transform:uppercase; margin-bottom:4px;" data-en="Visualization">Darstellung</span>
+                  <span data-en="Packet Reception Rate (PRR) based on range and transmission interval">Packet Reception Rate (PRR) basierend auf Reichweite und Sendeintervall</span>
                 </figcaption>
               </figure>
             </div>
             <div style="padding:calc(var(--space-4) * 1.4);">
-              <div style="font-family:var(--font-heading); font-weight:500; font-size:1.15rem; color:var(--color-text); line-height:1.35; margin-bottom:var(--space-3);">Task-Offloading in Fahrzeugnetzwerken</div>
-              <div style="color:var(--color-neutral-200); font-size:0.95rem; line-height:1.65; max-width:66ch; text-wrap:pretty;">Erweiterung des Netzwerksimulators Veins um ein Task-Offloading-Modell auf Basis von ITS-G5 mit IEEE 802.11p, einem Mitglied der WLAN-Standardfamilie. Die Extension implementiert und vergleicht mehrere Strategien zur Verteilung von Rechenlast zwischen Fahrzeugen und Road-Side Units. Die Szenarien basieren auf maßstabsgetreuen Straßennetzen aus OpenStreetMap.</div>
+              <div style="font-family:var(--font-heading); font-weight:500; font-size:1.15rem; color:var(--color-text); line-height:1.35; margin-bottom:var(--space-3);" data-en="Task Offloading in Vehicular Networks">Task-Offloading in Fahrzeugnetzwerken</div>
+              <div style="color:var(--color-neutral-200); font-size:0.95rem; line-height:1.65; max-width:66ch; text-wrap:pretty;" data-en="An extension to the Veins network simulator adding a task-offloading model based on ITS-G5 with IEEE 802.11p, a member of the Wi-Fi standards family. The extension implements and compares several strategies for distributing compute load between vehicles and road-side units. The scenarios are based on to-scale road networks from OpenStreetMap.">Erweiterung des Netzwerksimulators Veins um ein Task-Offloading-Modell auf Basis von ITS-G5 mit IEEE 802.11p, einem Mitglied der WLAN-Standardfamilie. Die Extension implementiert und vergleicht mehrere Strategien zur Verteilung von Rechenlast zwischen Fahrzeugen und Road-Side Units. Die Szenarien basieren auf maßstabsgetreuen Straßennetzen aus OpenStreetMap.</div>
               <div style="display:flex; flex-wrap:wrap; gap:var(--space-3); margin-top:var(--space-4);">
                 <span class="tag tag-outline">Veins</span>
                 <span class="tag tag-outline">OMNeT++</span>
@@ -448,12 +456,12 @@
                 <span class="tag tag-outline">OpenStreetMap</span>
               </div>
               <div style="display:flex; gap:var(--space-4); margin-top:var(--space-4); padding-top:var(--space-4); border-top:1px solid var(--color-neutral-800);">
-                <div style="color:var(--color-accent-300); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; flex-shrink:0; width:72px; padding-top:2px;">Deutung</div>
-                <div style="color:var(--color-neutral-200); font-size:0.9rem; line-height:1.6; max-width:62ch; text-wrap:pretty;">Die Darstellung zeigt, dass die Packet Reception Rate in Umgebungen mit dichter Teilnehmeranzahl sinkt und der Paketverlust entsprechend steigt. Dichte Bebauung am Straßenrand verstärkt diesen Effekt zusätzlich, durch Abschattung und durch Mehrwegeausbreitung, also Reflexion und Beugung der Funksignale an Gebäuden. Genau diese Effekte nutzt die Masterarbeit, um Strategien für Fahrzeuge und Road-Side Units zu entwickeln, die unter solchen Bedingungen die bestmögliche Kommunikation erreichen.</div>
+                <div style="color:var(--color-accent-300); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; flex-shrink:0; width:72px; padding-top:2px;" data-en="Interpretation">Deutung</div>
+                <div style="color:var(--color-neutral-200); font-size:0.9rem; line-height:1.6; max-width:62ch; text-wrap:pretty;" data-en="The chart shows that the Packet Reception Rate drops in environments with a high density of participants, with packet loss rising accordingly. Dense roadside development amplifies this effect further, through shadowing and multipath propagation - that is, reflection and diffraction of radio signals off buildings. The thesis uses exactly these effects to develop strategies for vehicles and road-side units that achieve the best possible communication under such conditions.">Die Darstellung zeigt, dass die Packet Reception Rate in Umgebungen mit dichter Teilnehmeranzahl sinkt und der Paketverlust entsprechend steigt. Dichte Bebauung am Straßenrand verstärkt diesen Effekt zusätzlich, durch Abschattung und durch Mehrwegeausbreitung, also Reflexion und Beugung der Funksignale an Gebäuden. Genau diese Effekte nutzt die Masterarbeit, um Strategien für Fahrzeuge und Road-Side Units zu entwickeln, die unter solchen Bedingungen die bestmögliche Kommunikation erreichen.</div>
               </div>
               <div style="display:flex; gap:var(--space-4); margin-top:var(--space-4); padding-top:var(--space-4); border-top:1px solid var(--color-neutral-800);">
-                <div style="color:var(--color-accent-300); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; flex-shrink:0; width:72px; padding-top:2px;">Ziel</div>
-                <div style="color:var(--color-neutral-200); font-size:0.9rem; line-height:1.6; max-width:62ch; text-wrap:pretty;">Eine geeignete Strategie für die Verteilung von Rechenlast zwischen Fahrzeugen und Road-Side Units unter Verwendung von ITS-G5 finden. Bewertet wurden Kommunikationsverhalten und Deadline-Verletzungen der ausgelagerten Aufgaben über mehrere Szenarien. Diese Kombination aus Parametern und Umgebungen ist in der Forschung bislang nicht untersucht worden, sodass die Arbeit eine offene Lücke im Stand der Wissenschaft adressiert. Zwei der drei Szenarien basieren auf dem Forschungsprojekt ACCorD, dem Korridor für neue Mobilität zwischen Aachen und Düsseldorf, um die Strategie unter realitätsnahen Bedingungen zu bewerten.</div>
+                <div style="color:var(--color-accent-300); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; flex-shrink:0; width:72px; padding-top:2px;" data-en="Goal">Ziel</div>
+                <div style="color:var(--color-neutral-200); font-size:0.9rem; line-height:1.6; max-width:62ch; text-wrap:pretty;" data-en="Find a suitable strategy for distributing compute load between vehicles and road-side units using ITS-G5. Communication behavior and deadline violations of the offloaded tasks were evaluated across multiple scenarios. This combination of parameters and environments has not previously been studied in the research, so the thesis addresses an open gap in the state of the art. Two of the three scenarios are based on the ACCorD research project, the corridor for new mobility between Aachen and Düsseldorf, to evaluate the strategy under realistic conditions.">Eine geeignete Strategie für die Verteilung von Rechenlast zwischen Fahrzeugen und Road-Side Units unter Verwendung von ITS-G5 finden. Bewertet wurden Kommunikationsverhalten und Deadline-Verletzungen der ausgelagerten Aufgaben über mehrere Szenarien. Diese Kombination aus Parametern und Umgebungen ist in der Forschung bislang nicht untersucht worden, sodass die Arbeit eine offene Lücke im Stand der Wissenschaft adressiert. Zwei der drei Szenarien basieren auf dem Forschungsprojekt ACCorD, dem Korridor für neue Mobilität zwischen Aachen und Düsseldorf, um die Strategie unter realitätsnahen Bedingungen zu bewerten.</div>
               </div>
             </div>
           </div>
@@ -462,7 +470,7 @@
           <div style="display:flex; align-items:center; gap:var(--space-4);">
             <span style="font-family:var(--font-heading); font-weight:600; font-size:1.05rem; color:var(--color-neutral-400); font-variant-numeric:tabular-nums;">TBD</span>
             <span style="flex:1; height:1px; background:linear-gradient(90deg, var(--color-neutral-800), transparent);"></span>
-            <span style="color:var(--color-neutral-400); font-size:0.85rem;">Weitere Projekte folgen.</span>
+            <span style="color:var(--color-neutral-400); font-size:0.85rem;" data-en="More projects coming soon.">Weitere Projekte folgen.</span>
           </div>
         </article>
       </div>
@@ -470,14 +478,14 @@
 
     <!-- ============================== KONTAKT ============================== -->
     <section class="view" data-view="kontakt" style="max-width:960px; margin:0 auto; padding:calc(var(--space-8) * 2) var(--space-6) calc(var(--space-8)*1.5); width:100%; box-sizing:border-box;">
-      <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-4);">Kontakt</h2>
+      <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-4);" data-en="Contact">Kontakt</h2>
       <div style="display:flex; flex-direction:column; gap:var(--space-2); color:var(--color-neutral-100); font-size:0.95rem;">
-        <div>E-Mail: <a href="mailto:kayabasi.burak@outlook.de">kayabasi.burak@outlook.de</a></div>
-        <div>LinkedIn: <a href="#">Profil ansehen</a></div>
+        <div><span data-en="Email:">E-Mail:</span> <a href="mailto:kayabasi.burak@outlook.de">kayabasi.burak@outlook.de</a></div>
+        <div>LinkedIn: <a href="#" data-en="View profile">Profil ansehen</a></div>
       </div>
 
       <div style="margin-top:var(--space-8);">
-        <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-6);">Aktivität</h2>
+        <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-6);" data-en="Activity">Aktivität</h2>
         <github-contrib user="Burakayabasi" style="display:block; min-height:170px;"></github-contrib>
       </div>
     </section>

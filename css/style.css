@@ -13,6 +13,22 @@
   to { width: 100%; }
 }
 
+@keyframes intro-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes intro-steam {
+  0% { opacity: 0; transform: translateY(0) scaleY(0.6); }
+  30% { opacity: 0.85; }
+  100% { opacity: 0; transform: translateY(-9px) scaleY(1.15); }
+}
+
+@keyframes intro-pour {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
 @keyframes page-in {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
@@ -27,10 +43,25 @@
     from { opacity: 1; transform: none; }
     to { opacity: 1; transform: none; }
   }
+  .intro-content, .intro-cup-fill, .intro-rule {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    width: 100% !important;
+  }
+  .intro-steam {
+    animation: none !important;
+    opacity: 0 !important;
+  }
 }
 
 /* -- intro splash screen --
-   Shown on load, hidden a moment later by app.js switching data-state. */
+   Shown on load, hidden a moment later by app.js switching data-state.
+   .intro-bg carries a full-viewport base gradient so the screen is
+   always evenly covered — the two drifting glow blobs sit on top of
+   that base as decoration, instead of being the only source of color
+   (which used to leave a visible seam where neither blob reached, top
+   and bottom, on tall phone screens). */
 .intro-overlay {
   position: fixed;
   inset: 0;
@@ -42,16 +73,25 @@
   background: var(--color-bg);
   opacity: 1;
   transform: scale(1);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.55s ease, transform 0.55s ease;
 }
 .intro-overlay[data-state="exit"],
 .intro-overlay[data-state="done"] {
   opacity: 0;
-  transform: scale(1.05);
+  transform: scale(1.04);
   pointer-events: none;
 }
 .intro-overlay[data-state="done"] {
   visibility: hidden;
+}
+.intro-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 140% 90% at 50% 8%, var(--color-accent-900) 0%, transparent 60%),
+    radial-gradient(ellipse 140% 90% at 50% 100%, var(--color-accent-900) 0%, transparent 60%),
+    var(--color-bg);
 }
 .intro-glow {
   position: absolute;
@@ -74,11 +114,53 @@
   animation-duration: 11s;
   animation-direction: reverse;
 }
+.intro-content {
+  position: relative;
+  text-align: center;
+  max-width: 92vw;
+  margin: 0 auto;
+  box-sizing: border-box;
+  animation: intro-in 0.7s cubic-bezier(0.22, 0.7, 0.3, 1) both;
+}
+.intro-cup {
+  display: block;
+  margin: 0 auto var(--space-3);
+  overflow: visible;
+}
+.intro-cup-fill {
+  transform-origin: 50% 100%;
+  animation: intro-pour 0.7s cubic-bezier(0.22, 0.7, 0.3, 1) 0.15s both;
+}
+.intro-steam {
+  transform-origin: 50% 100%;
+  animation: intro-steam 1.7s ease-in-out infinite;
+}
+.intro-steam-2 {
+  animation-delay: 0.35s;
+}
+.intro-steam-3 {
+  animation-delay: 0.7s;
+}
+.intro-name {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 7vw, 4.6rem);
+  color: var(--color-text);
+  letter-spacing: 0.02em;
+}
 .intro-rule {
   height: 2px;
+  width: 0;
   margin: var(--space-4) auto 0;
   background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
   animation: intro-line 1.1s ease-out 0.3s both;
+}
+.intro-role {
+  margin-top: var(--space-4);
+  color: var(--color-neutral-300);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
 /* -- navigation -- */
@@ -112,10 +194,6 @@
   background: color-mix(in oklab, var(--color-neutral-900) 88%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in oklab, #39ff8f 80%, transparent),
     0 0 10px 1px color-mix(in oklab, #39ff8f 35%, transparent);
-  transition: box-shadow 0.2s ease;
-}
-.nav-avatar:hover {
-  box-shadow: 0 0 0 2px #39ff8f;
 }
 .nav-avatar span {
   display: flex;
@@ -195,8 +273,8 @@
   color: var(--color-bg);
   background: var(--color-text);
 }
-/* icon-only, same circular treatment as the BK avatar, so it reads as
-   one design language and costs far less width than a labelled button */
+/* icon-only, same circular treatment (and the same constant neon glow)
+   as the BK avatar, so the two read as one consistent design language */
 .nav-gh {
   width: 30px;
   height: 30px;
@@ -206,12 +284,13 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  border: 1px solid var(--color-neutral-700);
-  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  background: color-mix(in oklab, var(--color-neutral-900) 88%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, #39ff8f 80%, transparent),
+    0 0 10px 1px color-mix(in oklab, #39ff8f 35%, transparent);
+  transition: box-shadow 0.2s ease;
 }
 .nav-gh:hover {
-  border-color: #39ff8f;
-  box-shadow: 0 0 10px 1px color-mix(in oklab, #39ff8f 35%, transparent);
+  box-shadow: 0 0 0 2px #39ff8f;
   text-decoration: none;
 }
 
@@ -353,6 +432,14 @@
    the car-net 3D view gets a taller box so its overlay text doesn't
    collide. */
 @media (max-width: 480px) {
+  /* scales every rem-based size sitewide (type, spacing tokens defined
+     in rem, icon sizes) down together, rather than hand-tuning dozens
+     of individual rules — html's own font-size is what rem resolves
+     against, unrelated to body's font-size which only affects em/
+     unitless inheritance */
+  html {
+    font-size: 90%;
+  }
   .nav {
     padding: 7px 10px;
     gap: var(--space-2);
@@ -362,14 +449,23 @@
     font-size: 0.76rem;
   }
   :root {
-    --tl-date-w: 78px;
-    --tl-dot-w: 20px;
+    --tl-date-w: 68px;
+    --tl-dot-w: 18px;
   }
   /* the "4 Stationen" / "2 Abschlüsse" counters are a nice-to-have next
      to a single-word section title ("Berufserfahrung") that can't wrap —
      dropping them is what keeps that header row from overflowing */
   .tl-section-count {
     display: none;
+  }
+  /* location labels ("Affalterbach") sit under the date in the same
+     narrow column — shrink and allow them to wrap instead of pushing
+     past the timeline's date column */
+  .tl-loc {
+    font-size: 0.6rem !important;
+    letter-spacing: 0.06em !important;
+    white-space: normal !important;
+    overflow-wrap: break-word;
   }
   /* the car-net 3D view packs a warning badge, a drag/zoom hint and a
      row of layer toggles into one box — at a 16:9 ratio there isn't
