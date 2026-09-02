@@ -149,6 +149,12 @@
   font-weight: 600;
   background: color-mix(in oklab, var(--color-neutral-700) 55%, transparent);
 }
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
 .nav-lang-group {
   display: flex;
   align-items: center;
@@ -243,7 +249,7 @@
 /* -- werdegang: experience timeline -- */
 .tl-row {
   display: grid;
-  grid-template-columns: 118px 26px minmax(0, 1fr);
+  grid-template-columns: var(--tl-date-w) var(--tl-dot-w) minmax(0, 1fr);
   align-items: start;
   transition: background 0.25s ease;
 }
@@ -316,4 +322,43 @@
 /* the animated bus lines in the car-net 3D view */
 .amg-bus path[stroke-dasharray] {
   animation: bus-flow 2.6s linear infinite;
+}
+
+/* -- small screens --
+   The nav pill is the one piece of the layout that doesn't reflow on its
+   own (it's a row of fixed-ish items), so below ~640px it wraps onto a
+   second line instead of forcing the page wider than the viewport. The
+   werdegang timeline's date/dot columns also shrink here to leave more
+   room for the actual content column. */
+@media (max-width: 640px) {
+  .nav {
+    flex-wrap: wrap;
+    row-gap: 10px;
+    padding: 8px 14px;
+    gap: var(--space-3);
+  }
+  .nav-links {
+    order: 3;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  }
+  .nav-link {
+    padding: 5px 10px;
+    font-size: 0.76rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --tl-date-w: 78px;
+    --tl-dot-w: 20px;
+  }
+  /* the "4 Stationen" / "2 Abschlüsse" counters are a nice-to-have next
+     to a single-word section title ("Berufserfahrung") that can't wrap —
+     dropping them is what keeps that header row from overflowing */
+  .tl-section-count {
+    display: none;
+  }
 }

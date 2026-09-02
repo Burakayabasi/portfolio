@@ -43,6 +43,10 @@
   --space-6: 16.8px;
   --space-8: 22.4px;
 
+  /* timeline column widths (werdegang), overridden on small screens */
+  --tl-date-w: 118px;
+  --tl-dot-w: 26px;
+
   /* -- radius -- */
   --radius-sm: 4px;
   --radius-md: 8px;
