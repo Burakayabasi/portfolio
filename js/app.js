@@ -18,6 +18,8 @@
   const scenarioCaptions = document.querySelectorAll("[data-scenario-caption]");
   const scenarioElements = document.querySelectorAll("scenario-map, prr-surface");
   const footer = document.querySelector(".site-footer");
+  const dropdownToggle = document.querySelector("[data-dropdown-toggle]");
+  const dropdownMenu = document.querySelector("[data-dropdown-menu]");
 
   // -- translation --
   // Static content is translated declaratively: any element carrying
@@ -102,12 +104,38 @@
     scenarioElements.forEach((el) => el.setAttribute("scenario", scenario));
   }
 
+  // -- "Weiteres" nav dropdown --
+  // The menu panel lives outside .nav-links (which scrolls/masks its
+  // contents) and is positioned with a fixed offset computed from the
+  // toggle button's own position, so it always lands right under it
+  // regardless of nav scroll state or screen size.
+  function closeDropdown() {
+    if (!dropdownToggle || !dropdownMenu) return;
+    dropdownMenu.hidden = true;
+    dropdownToggle.setAttribute("aria-expanded", "false");
+  }
+  function openDropdown() {
+    if (!dropdownToggle || !dropdownMenu) return;
+    const r = dropdownToggle.getBoundingClientRect();
+    dropdownMenu.style.top = r.bottom + 8 + "px";
+    dropdownMenu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - dropdownMenu.offsetWidth - 8 || r.left)) + "px";
+    dropdownMenu.hidden = false;
+    dropdownToggle.setAttribute("aria-expanded", "true");
+    // measure once visible, then clamp again in case the panel is wider
+    // than the estimate above (offsetWidth is 0 while hidden)
+    requestAnimationFrame(() => {
+      const left = Math.max(8, Math.min(r.left, window.innerWidth - dropdownMenu.offsetWidth - 8));
+      dropdownMenu.style.left = left + "px";
+    });
+  }
+
   // Delegate every click so we don't need a listener per element.
   document.addEventListener("click", (event) => {
     const navTarget = event.target.closest("[data-nav]");
     if (navTarget) {
       event.preventDefault();
       setView(navTarget.dataset.nav);
+      closeDropdown();
       return;
     }
 
@@ -122,8 +150,27 @@
     if (scenarioTarget) {
       event.preventDefault();
       setScenario(scenarioTarget.dataset.setScenario);
+      return;
+    }
+
+    const dropdownTarget = event.target.closest("[data-dropdown-toggle]");
+    if (dropdownTarget) {
+      event.preventDefault();
+      if (dropdownMenu && dropdownMenu.hidden) openDropdown();
+      else closeDropdown();
+      return;
+    }
+
+    if (dropdownMenu && !dropdownMenu.hidden && !event.target.closest("[data-dropdown-menu]")) {
+      closeDropdown();
     }
   });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeDropdown();
+  });
+  window.addEventListener("scroll", closeDropdown, { passive: true });
+  window.addEventListener("resize", closeDropdown);
 
   // Splash screen: shown briefly on load, then faded out.
   if (introOverlay) {

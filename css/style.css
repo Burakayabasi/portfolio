@@ -244,6 +244,48 @@
   font-weight: 600;
   background: color-mix(in oklab, var(--color-neutral-700) 55%, transparent);
 }
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+.nav-dropdown-toggle .nav-caret {
+  color: currentColor;
+  transition: transform 0.18s ease;
+}
+.nav-dropdown-toggle[aria-expanded="true"] .nav-caret {
+  transform: rotate(180deg);
+}
+.nav-dropdown-menu {
+  position: fixed;
+  min-width: 170px;
+  padding: 6px;
+  border: 1px solid var(--color-neutral-800);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
+  background: color-mix(in oklab, var(--color-bg) 94%, transparent);
+  box-shadow: var(--shadow-lg);
+  z-index: 30;
+}
+.nav-dropdown-menu[hidden] {
+  display: none;
+}
+.nav-dropdown-menu .nav-link {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+}
+.nav-dropdown-empty {
+  display: block;
+  padding: 8px 10px;
+  font-size: 0.78rem;
+  color: var(--color-neutral-400);
+}
 .nav-actions {
   flex-shrink: 0;
   display: flex;
