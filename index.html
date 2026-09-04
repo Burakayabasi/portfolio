@@ -68,7 +68,7 @@
     </div>
 
     <!-- ============================== HOME ============================== -->
-    <section class="view view-home" data-view="home" style="position:relative; width:100%; min-height:calc(100vh - 50px); margin-top:-50px; padding-top:calc(50px + clamp(40px,7vh,96px)); padding-bottom:clamp(56px,8vh,104px); box-sizing:border-box; overflow:hidden;">
+    <section class="view view-home" data-view="home" style="position:relative; width:100%; height:calc(100vh - 50px); height:calc(100dvh - 50px); margin-top:-50px; padding-top:calc(50px + clamp(24px,6vh,96px)); padding-bottom:clamp(24px,6vh,104px); box-sizing:border-box; overflow:hidden;">
       <particle-net style="position:absolute; inset:0; z-index:0;"></particle-net>
       <div style="position:absolute; inset:0; z-index:1; pointer-events:none; background:radial-gradient(ellipse 70% 60% at 50% 45%, transparent 0%, color-mix(in oklab, var(--color-bg) 78%, transparent) 100%);"></div>
 
@@ -89,8 +89,8 @@
         </div>
       </div>
 
-      <div style="position:relative; z-index:2; width:100%; margin:clamp(14px,2.5vh,34px) 0 0; pointer-events:none; display:flex; justify-content:center; align-items:center;">
-        <img src="assets/amg-gt3-render.png" alt="Drahtgittermodell eines AMG GT3 mit angedeuteter Steuergeräte-Vernetzung" data-en-alt="Wireframe model of an AMG GT3 with implied ECU networking" style="position:relative; z-index:2; display:block; width:min(860px, 92vw); height:auto; opacity:0.9; mask-image:linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%), linear-gradient(to right, transparent 0%, #000 11%, #000 89%, transparent 100%); mask-composite:intersect; -webkit-mask-composite:source-in;">
+      <div style="position:relative; z-index:2; width:100%; flex:1 1 auto; min-height:0; margin:clamp(10px,2vh,34px) 0 0; pointer-events:none; display:flex; justify-content:center; align-items:center; overflow:hidden;">
+        <img src="assets/amg-gt3-render.png" alt="Drahtgittermodell eines AMG GT3 mit angedeuteter Steuergeräte-Vernetzung" data-en-alt="Wireframe model of an AMG GT3 with implied ECU networking" style="position:relative; z-index:2; display:block; max-width:min(860px, 92vw); max-height:100%; width:auto; height:auto; opacity:0.9; mask-image:linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%), linear-gradient(to right, transparent 0%, #000 11%, #000 89%, transparent 100%); mask-composite:intersect; -webkit-mask-composite:source-in;">
       </div>
     </section>
 

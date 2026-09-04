@@ -2,6 +2,11 @@
    Everything below is plain CSS custom properties — no build step needed. */
 
 :root {
+  /* tells the browser this page is intentionally dark, so native form
+     controls (buttons, focus rings, scrollbars) pick dark-appropriate
+     system styling instead of the browser's own default light theme */
+  color-scheme: dark;
+
   /* -- surfaces & text -- */
   --color-bg: #161826;
   --color-surface: #232532;

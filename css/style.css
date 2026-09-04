@@ -245,12 +245,18 @@
   background: color-mix(in oklab, var(--color-neutral-700) 55%, transparent);
 }
 .nav-dropdown-toggle {
+  appearance: none;
+  -webkit-appearance: none;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   background: transparent;
   border: none;
-  font: inherit;
+  /* .nav-link (below) already sets font-size/weight/letter-spacing to
+     match the other nav items — only pull the family from the page,
+     since a <button> doesn't inherit that by default like an <a> does */
+  font-family: inherit;
+  color: inherit;
   cursor: pointer;
 }
 .nav-dropdown-toggle .nav-caret {
@@ -266,8 +272,14 @@
   padding: 6px;
   border: 1px solid var(--color-neutral-800);
   border-radius: var(--radius-lg);
-  backdrop-filter: blur(10px);
+  font-family: var(--font-body);
+  color: var(--color-text);
+  /* solid fallback first, in case a browser can't parse the color-mix()
+     below — keeps the panel dark instead of falling through to a blank/
+     light background */
+  background: #14151f;
   background: color-mix(in oklab, var(--color-bg) 94%, transparent);
+  backdrop-filter: blur(10px);
   box-shadow: var(--shadow-lg);
   z-index: 30;
 }
