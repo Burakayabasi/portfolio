@@ -52,6 +52,7 @@
         </div>
         <div class="nav-dropdown-menu" data-dropdown-menu="weiteres" hidden>
           <a href="#" data-nav="kontakt" class="nav-link" data-view-link="kontakt" data-en="Contact">Kontakt</a>
+          <a href="#" data-nav="aktivitaet" class="nav-link" data-view-link="aktivitaet" data-en="Activity">Aktivität</a>
         </div>
         <div class="nav-actions">
           <div class="nav-lang-group">
@@ -484,16 +485,39 @@
 
     <!-- ============================== KONTAKT ============================== -->
     <section class="view" data-view="kontakt" style="max-width:960px; margin:0 auto; padding:calc(var(--space-8) * 2) var(--space-6) calc(var(--space-8)*1.5); width:100%; box-sizing:border-box;">
-      <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-4);" data-en="Contact">Kontakt</h2>
-      <div style="display:flex; flex-direction:column; gap:var(--space-2); color:var(--color-neutral-100); font-size:0.95rem;">
-        <div><span data-en="Email:">E-Mail:</span> <a href="mailto:kayabasi.burak@outlook.de">kayabasi.burak@outlook.de</a></div>
-        <div>LinkedIn: <a href="#" data-en="View profile">Profil ansehen</a></div>
+      <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-6);" data-en="Contact">Kontakt</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:var(--space-4);">
+        <a href="https://www.linkedin.com/in/burak-kayabasi-420949265" target="_blank" rel="noopener" class="contact-card" aria-label="LinkedIn-Profil öffnen" data-en-aria-label="Open LinkedIn profile">
+          <span class="contact-card-icon" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="#39ff8f"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.11 20.45H3.56V9h3.55v11.45z"></path></svg>
+          </span>
+          <span class="contact-card-body">
+            <span class="contact-card-title">LinkedIn</span>
+            <span class="contact-card-sub" data-en="View profile">Profil ansehen</span>
+          </span>
+          <span class="contact-card-arrow" aria-hidden="true">↗</span>
+        </a>
+        <button type="button" class="contact-card" data-copy-email="kayabasi.burak@outlook.de" aria-label="E-Mail-Adresse kopieren" data-en-aria-label="Copy email address">
+          <span class="contact-card-icon" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#39ff8f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.5h17v13h-17z"></path><path d="M4 6.2l8 6.4 8-6.4"></path></svg>
+          </span>
+          <span class="contact-card-body">
+            <span class="contact-card-title" data-en="Email">E-Mail</span>
+            <span class="contact-card-sub" data-copy-default>kayabasi.burak@outlook.de</span>
+          </span>
+          <span class="contact-card-arrow contact-card-copy-icon" aria-hidden="true">
+            <svg data-copy-icon-idle width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M4 16V4h12"></path></svg>
+            <svg data-copy-icon-done width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" hidden><path d="M4 12l6 6L20 6"></path></svg>
+          </span>
+        </button>
       </div>
+    </section>
 
-      <div style="margin-top:var(--space-8);">
-        <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-6);" data-en="Activity">Aktivität</h2>
-        <github-contrib user="Burakayabasi" style="display:block; min-height:170px;"></github-contrib>
-      </div>
+    <!-- ============================= AKTIVITÄT ============================= -->
+    <section class="view" data-view="aktivitaet" style="max-width:960px; margin:0 auto; padding:calc(var(--space-8) * 2) var(--space-6) calc(var(--space-8)*1.5); width:100%; box-sizing:border-box;">
+      <h2 style="font-family:var(--font-heading); font-weight:500; font-size:1.6rem; color:var(--color-text); margin-bottom:var(--space-2);" data-en="Activity">Aktivität</h2>
+      <p style="color:var(--color-neutral-300); font-size:0.92rem; margin:0 0 var(--space-6);" data-en="More to come here.">Hier kommt noch mehr.</p>
+      <github-contrib user="Burakayabasi" style="display:block; min-height:170px;"></github-contrib>
     </section>
 
     <footer class="site-footer" style="border-top:1px solid var(--color-neutral-800); padding:var(--space-4) var(--space-6); text-align:center; color:var(--color-neutral-400); font-size:0.85rem;">

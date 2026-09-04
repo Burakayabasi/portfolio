@@ -5,7 +5,7 @@
 
 (() => {
   const state = {
-    view: "home", // "home" | "werdegang" | "projekte" | "kontakt"
+    view: "home", // "home" | "werdegang" | "projekte" | "kontakt" | "aktivitaet"
     lang: "de", // "de" | "en"
     scenario: "Melaten", // "Melaten" | "Aachen" | "Jackerath"
   };
@@ -129,6 +129,34 @@
     });
   }
 
+  // -- kontakt: copy-email card --
+  // Clicking the e-mail card copies the address and briefly swaps its
+  // subtitle + icon to a "copied" state instead of navigating anywhere.
+  function copyEmail(card) {
+    const email = card.dataset.copyEmail;
+    const sub = card.querySelector("[data-copy-default]");
+    const idleIcon = card.querySelector("[data-copy-icon-idle]");
+    const doneIcon = card.querySelector("[data-copy-icon-done]");
+    if (!card._copyOriginal && sub) card._copyOriginal = sub.textContent;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).catch(() => {});
+    }
+
+    card.setAttribute("data-copied", "true");
+    if (sub) sub.textContent = state.lang === "en" ? "Copied!" : "Kopiert!";
+    if (idleIcon) idleIcon.hidden = true;
+    if (doneIcon) doneIcon.hidden = false;
+
+    clearTimeout(card._copyTimer);
+    card._copyTimer = setTimeout(() => {
+      card.removeAttribute("data-copied");
+      if (sub) sub.textContent = card._copyOriginal || email;
+      if (idleIcon) idleIcon.hidden = false;
+      if (doneIcon) doneIcon.hidden = true;
+    }, 1600);
+  }
+
   // Delegate every click so we don't need a listener per element.
   document.addEventListener("click", (event) => {
     const navTarget = event.target.closest("[data-nav]");
@@ -158,6 +186,13 @@
       event.preventDefault();
       if (dropdownMenu && dropdownMenu.hidden) openDropdown();
       else closeDropdown();
+      return;
+    }
+
+    const copyTarget = event.target.closest("[data-copy-email]");
+    if (copyTarget) {
+      event.preventDefault();
+      copyEmail(copyTarget);
       return;
     }
 
