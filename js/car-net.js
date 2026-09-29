@@ -198,6 +198,50 @@
       this._applyLang();
     }
 
+    setTheme(theme) {
+      this._theme = theme;
+      // Shadow-DOM labels/chips use CSS vars and flip automatically.
+      // Three.js materials use the parsed palette — refresh from computed vars.
+      try {
+        Object.assign(PALETTE, palette());
+        const light = theme === 'light';
+        // keep chip swatches in sync (LAYERS colors are a boot-time snapshot)
+        (this._layersRef || []).forEach((l) => {
+          const c = PALETTE[l.id] || l.color;
+          l.color = c;
+          if (l._chipSw) l._chipSw.style.background = c;
+        });
+        if (this._mats) {
+          if (this._mats.grid) {
+            this._mats.grid.color.set(PALETTE.grid);
+            this._mats.grid.opacity = light ? 0.4 : 0.13;
+          }
+          if (this._mats.edge) {
+            this._mats.edge.color.set(PALETTE.body);
+            this._mats.edge.opacity = light ? 0.85 : 0.5;
+          }
+          if (this._mats.shell) {
+            this._mats.shell.color.set(PALETTE.shell);
+            // light fill on a light background washes the wireframe out —
+            // nearly transparent in light mode, solid in dark mode.
+            this._mats.shell.opacity = light ? 0.15 : 0.66;
+          }
+          if (this._mats.bus) {
+            for (const bus of Object.keys(this._mats.bus)) {
+              const col = PALETTE[bus];
+              if (!col) continue;
+              this._mats.bus[bus].forEach((m) => {
+                m.color.set(col);
+                if (m.userData && m.userData.lightOpacity !== undefined && m.userData.darkOpacity !== undefined) {
+                  m.opacity = light ? m.userData.lightOpacity : m.userData.darkOpacity;
+                }
+              });
+            }
+          }
+        }
+      } catch (e) {}
+    }
+
     _applyLang() {
       const root = this.shadowRoot;
       if (!root) return;
@@ -219,6 +263,12 @@
         import(THREE_URL), import(ORBIT_URL), import(GLTF_URL)
       ]);
       Object.assign(PALETTE, palette());
+      const bootLight = (this._theme || document.documentElement.getAttribute('data-theme')) === 'light';
+      // LAYERS colors are a module-load snapshot (dark defaults) — refresh
+      // from the resolved palette so chips match the active theme on first paint.
+      LAYERS.forEach((l) => {
+        if (PALETTE[l.id]) l.color = PALETTE[l.id];
+      });
       const wrap = this.shadowRoot.querySelector('.wrap');
       const labelHost = this.shadowRoot.querySelector('.labels');
 
@@ -245,9 +295,12 @@
 
       const grid = new THREE.GridHelper(14, 28, PALETTE.grid, PALETTE.grid);
       grid.material.transparent = true;
-      grid.material.opacity = 0.13;
+      grid.material.opacity = bootLight ? 0.4 : 0.13;
       grid.material.depthWrite = false;
       scene.add(grid);
+      this._mats = this._mats || {};
+      this._mats.grid = grid.material;
+      this._mats.bus = { can: [], flexray: [], eth: [] };
 
       const groups = {};
       LAYERS.forEach(l => {
@@ -295,12 +348,14 @@
         box = new THREE.Box3().setFromObject(model);
 
         const edgeMat = new THREE.LineBasicMaterial({
-          color: PALETTE.body, transparent: true, opacity: 0.5, depthWrite: false
+          color: PALETTE.body, transparent: true, opacity: bootLight ? 0.85 : 0.5, depthWrite: false
         });
         const shellMat = new THREE.MeshBasicMaterial({
-          color: PALETTE.shell, transparent: true, opacity: 0.66,
+          color: PALETTE.shell, transparent: true, opacity: bootLight ? 0.15 : 0.66,
           polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1
         });
+        this._mats.edge = edgeMat;
+        this._mats.shell = shellMat;
         model.updateMatrixWorld(true);
         model.traverse(o => {
           if (!o.isMesh || !o.geometry) return;
@@ -308,10 +363,16 @@
           const shell = new THREE.Mesh(g, shellMat);
           shell.name = 'shell';
           shell.applyMatrix4(o.matrixWorld);
+          // Transformed after creation, so the cached bounding sphere is
+          // stale and frustum culling would wrongly discard parts while
+          // orbiting (visible as chunks loading/unloading, worse with the
+          // transparent shell). The whole car is always on screen anyway.
+          shell.frustumCulled = false;
           groups.body.add(shell);
           const e = new THREE.LineSegments(new THREE.EdgesGeometry(g, 24), edgeMat);
           e.name = 'edges';
           e.applyMatrix4(o.matrixWorld);
+          e.frustumCulled = false;
           groups.body.add(e);
         });
       } catch (err) {
@@ -347,20 +408,29 @@
         const col = PALETTE[e.bus];
 
         const nodeMat = xray(new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.9 }));
+        nodeMat.userData.darkOpacity = 0.9;
+        nodeMat.userData.lightOpacity = 0.95;
+        this._mats.bus[e.bus].push(nodeMat);
         const r = e.hub ? 0.105 : 0.075;
         const node = new THREE.LineSegments(
           new THREE.EdgesGeometry(new THREE.OctahedronGeometry(r, 0)), nodeMat
         );
         node.name = 'ecu-' + e.id;
         node.position.copy(pos);
+        // tiny markers: cheaper to always draw than to cull per-frame
+        node.frustumCulled = false;
         g.add(node);
 
         const core = new THREE.Mesh(
           new THREE.SphereGeometry(r * 0.42, 12, 8),
           xray(new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.9 }))
         );
+        core.material.userData.darkOpacity = 0.9;
+        core.material.userData.lightOpacity = 0.95;
+        this._mats.bus[e.bus].push(core.material);
         core.renderOrder = 4;
         core.position.copy(pos);
+        core.frustumCulled = false;
         g.add(core);
         e._core = core;
         e._node = node;
@@ -368,19 +438,31 @@
         if (!e.hub) {
           const via = P(e.via[0], e.via[1], e.via[2]);
           const curve = new THREE.CatmullRomCurve3([hubPos.clone(), via, pos.clone()], false, 'catmullrom', 0.4);
+          const lineMat = xray(new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: bootLight ? 0.75 : 0.45 }));
+          lineMat.userData.darkOpacity = 0.45;
+          lineMat.userData.lightOpacity = 0.75;
+          this._mats.bus[e.bus].push(lineMat);
           const line = new THREE.Line(
             new THREE.BufferGeometry().setFromPoints(curve.getPoints(48)),
-            xray(new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.45 }))
+            lineMat
           );
           line.name = 'bus-' + e.id;
+          // spans much of the car; stale bounds would pop it while orbiting
+          line.frustumCulled = false;
           g.add(line);
 
+          const pMat = xray(new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.95 }));
+          pMat.userData.darkOpacity = 0.95;
+          pMat.userData.lightOpacity = 0.95;
+          this._mats.bus[e.bus].push(pMat);
           const p = new THREE.Mesh(
             new THREE.SphereGeometry(0.028, 10, 8),
-            xray(new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.95 }))
+            pMat
           );
           p.name = 'pulse-' + e.id;
           p.renderOrder = 5;
+          // travels along the curve, so a static bounding sphere is wrong
+          p.frustumCulled = false;
           g.add(p);
           pulses.push({ mesh: p, curve, offset: i * 0.17, speed: 0.2 + (i % 3) * 0.035 });
         }
@@ -401,6 +483,7 @@
         b2.type = 'button';
         b2.setAttribute('aria-pressed', 'true');
         b2.innerHTML = `<span class="sw" style="background:${l.color}"></span><span class="lbl">${this._lang === 'en' ? l.labelEn : l.label}</span>`;
+        l._chipSw = b2.querySelector('.sw');
         b2.onclick = () => {
           on[l.id] = !on[l.id];
           groups[l.id].visible = on[l.id];
